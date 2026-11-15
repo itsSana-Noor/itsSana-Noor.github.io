@@ -3,1571 +3,2131 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sana Noor — ML &amp; Django Portfolio</title>
-  <meta name="description" content="Editorial portfolio of Sana Noor — Machine Learning Engineer & Python/Django Backend Developer specializing in NLP, Predictive ML Systems, and RESTful DRF APIs." />
+  <title>Sana Noor — Machine Learning &amp; Backend Engineer</title>
+  <meta name="description" content="Executive developer portfolio of Sana Noor — Machine Learning & Backend Engineer specializing in Python, Scikit-learn, NLP pipelines, Django, and Django REST Framework." />
 
-  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <!-- Instant Theme Initialization (Prevents Flash of Unstyled Theme, Defaults to Crisp Light Mode) -->
+  <script>
+    (function () {
+      try {
+        const savedTheme = localStorage.getItem('sana-portfolio-theme');
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {
+        // Fallback safely to light mode if storage is restricted
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Custom Semantic Token Mapping -->
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
-            warmCharcoal: '#46423D',
-            charcoalDeep: '#36332F',
-            royalBlue: '#1D54E8',
-            royalBlueHover: '#1643BD',
-            softPeriwinkle: '#DCE6FF',
-            warmGray: '#EAEAEA',
-            editorialPaper: '#F7F6F3',
-          },
-        },
-      },
+            canvas: 'var(--bg-canvas)',
+            surface: 'var(--bg-surface)',
+            subtle: 'var(--bg-subtle)',
+            ink: 'var(--text-primary)',
+            secondary: 'var(--text-secondary)',
+            muted: 'var(--text-muted)',
+            hairline: 'var(--border-hairline)',
+            accent: 'var(--accent-primary)',
+            accentHover: 'var(--accent-primary-hover)',
+            tealAccent: 'var(--accent-secondary)',
+            live: 'var(--status-live)',
+          }
+        }
+      }
     };
   </script>
 
-  <!-- Custom Editorial Styling & Smooth Animations -->
   <style>
+    /* =========================================================================
+       DESIGN TOKENS: CRISP LIGHT MODE (DEFAULT) & EXECUTIVE DARK MODE
+       ========================================================================= */
+    :root {
+      --bg-canvas: #FAFAFA;
+      --bg-surface: #FFFFFF;
+      --bg-subtle: #F1F5F9;
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --border-hairline: #E2E8F0;
+      --accent-primary: #2563EB;
+      --accent-primary-hover: #1D4ED8;
+      --accent-secondary: #0D9488;
+      --status-live: #059669;
+      --glass-nav: rgba(250, 250, 250, 0.82);
+      --dot-grid: rgba(15, 23, 42, 0.08);
+      --card-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px -4px rgba(15, 23, 42, 0.05);
+      --card-shadow-hover: 0 8px 24px -6px rgba(15, 23, 42, 0.09), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+      --accent-soft: rgba(37, 99, 235, 0.08);
+      --accent-border: rgba(37, 99, 235, 0.25);
+      --live-soft: rgba(5, 150, 105, 0.1);
+      --live-border: rgba(5, 150, 105, 0.28);
+    }
+
+    html.dark {
+      --bg-canvas: #090D16;
+      --bg-surface: #111827;
+      --bg-subtle: #1E293B;
+      --text-primary: #F8FAFC;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
+      --border-hairline: #1E293B;
+      --accent-primary: #3B82F6;
+      --accent-primary-hover: #2563EB;
+      --accent-secondary: #2DD4BF;
+      --status-live: #10B981;
+      --glass-nav: rgba(9, 13, 22, 0.82);
+      --dot-grid: rgba(248, 250, 252, 0.07);
+      --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 6px 20px -6px rgba(0, 0, 0, 0.45);
+      --card-shadow-hover: 0 12px 28px -6px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(59, 130, 246, 0.3);
+      --accent-soft: rgba(59, 130, 246, 0.12);
+      --accent-border: rgba(59, 130, 246, 0.3);
+      --live-soft: rgba(16, 185, 129, 0.12);
+      --live-border: rgba(16, 185, 129, 0.3);
+    }
+
+    /* Base Typography & Surface Transitions */
     body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background-color: #EAEAEA;
-      color: #2B2926;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       overflow-x: hidden;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
-    /* Subtle Dot Matrix Texture on Light Warm Gray Canvas */
-    .bg-editorial-dots {
-      background-image: radial-gradient(rgba(70, 66, 61, 0.14) 1px, transparent 1px);
-      background-size: 24px 24px;
+    /* Glassmorphic Top Navigation */
+    .glass-header {
+      background-color: var(--glass-nav);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-hairline);
     }
 
-    /* Editorial Card Shadow */
-    .editorial-shadow {
-      box-shadow: 0 20px 45px -18px rgba(70, 66, 61, 0.22);
+    /* Architectural Dot-Grid Texture */
+    .arch-dot-grid {
+      background-image: radial-gradient(var(--dot-grid) 1px, transparent 1px);
+      background-size: 16px 16px;
     }
 
-    .royal-shadow {
-      box-shadow: 0 16px 34px -10px rgba(29, 84, 232, 0.35);
+    /* Modern Elevated Hairline Card */
+    .exec-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--card-shadow);
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease;
     }
 
-    /* Gentle Floating Motion for Highlight Badge */
-    @keyframes subtleFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-4px); }
+    .exec-card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow-hover);
+      border-color: var(--accent-border);
     }
 
-    .float-badge {
-      animation: subtleFloat 4.5s ease-in-out infinite;
+    /* Soft Semantic Pills */
+    .pill-accent {
+      background-color: var(--accent-soft);
+      border: 1px solid var(--accent-border);
+      color: var(--accent-primary);
     }
 
-    /* Scroll Reveal Animation */
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    .pill-live {
+      background-color: var(--live-soft);
+      border: 1px solid var(--live-border);
+      color: var(--status-live);
     }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
+    /* Gradient Subtitle Accent (Cobalt Blue to Teal) */
+    .gradient-role-text {
+      background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
+    /* Subtle Hero Ambient Glow */
+    .hero-ambient {
+      background: radial-gradient(600px circle at 15% 10%, var(--accent-soft), transparent 65%);
     }
-    ::-webkit-scrollbar-track {
-      background: #EAEAEA;
+
+    /* Modal Entrance Motion */
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
-    ::-webkit-scrollbar-thumb {
-      background: #46423D;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #1D54E8;
+
+    .animate-modal-in {
+      animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
   </style>
 </head>
+<body class="bg-canvas text-ink antialiased selection:bg-accent selection:text-white">
 
-<body class="bg-editorial-dots antialiased selection:bg-[#1D54E8] selection:text-white">
+  <!-- =====================================================================
+       1. STICKY GLASSMORPHIC TOP NAVIGATION BAR
+       ===================================================================== -->
+  <header class="sticky top-0 z-40 glass-header">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
 
-  <!-- ==================== 1. STICKY EDITORIAL PILL NAVBAR ==================== -->
-  <header class="sticky top-0 z-50 pt-3 sm:pt-4 px-3 sm:px-6">
-    <nav
-      aria-label="Primary Navigation"
-      class="max-w-6xl mx-auto bg-white/95 backdrop-blur-md border border-[#46423D]/15 rounded-full px-3.5 sm:px-6 py-2.5 shadow-md flex items-center justify-between gap-3"
-    >
-      <!-- Brand Monogram & Name -->
-      <a href="#home" class="flex items-center gap-2.5 group focus:outline-none shrink-0">
-        <div class="w-9 h-9 rounded-full bg-[#1D54E8] text-white flex items-center justify-center font-mono font-bold text-xs tracking-tighter group-hover:scale-105 transition-transform">
-          SN.
-        </div>
-        <div class="flex items-baseline gap-2">
-          <span class="font-extrabold text-sm sm:text-base tracking-tight text-[#46423D] group-hover:text-[#1D54E8] transition-colors">
-            Sana Noor
-          </span>
-          <span class="hidden md:inline font-mono text-[11px] text-[#46423D]/60">
-            // ML &amp; Django Dev
-          </span>
-        </div>
+      <!-- Brand Mark & GitHub Handle Pill -->
+      <a href="#top" class="flex items-center gap-2.5 group focus:outline-none">
+        <span class="w-8 h-8 rounded-lg bg-accent text-white font-bold text-xs tracking-tight flex items-center justify-center shadow-sm group-hover:bg-accentHover transition-colors">
+          SN
+        </span>
+        <span class="font-bold text-sm sm:text-base tracking-tight text-ink">
+          Sana Noor
+        </span>
+        <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">
+          @itsSana-Noor
+        </span>
       </a>
 
-      <!-- Center Editorial Pill Links -->
-      <div class="hidden lg:flex items-center gap-1.5 text-xs sm:text-sm font-semibold">
-        <a
-          href="#home"
-          class="nav-pill px-4 py-1.5 rounded-full bg-[#DCE6FF] text-[#1D54E8] transition-colors"
-        >
-          Home
-        </a>
-        <a
-          href="#projects"
-          class="nav-pill px-4 py-1.5 rounded-full text-[#46423D]/80 hover:text-[#1D54E8] hover:bg-[#DCE6FF]/60 transition-colors"
-        >
+      <!-- Desktop Navigation Links -->
+      <nav aria-label="Primary Navigation" class="hidden md:flex items-center gap-1">
+        <a href="#projects" class="px-3 py-1.5 rounded-lg text-sm font-medium text-secondary hover:text-ink hover:bg-subtle transition-colors">
           Projects
         </a>
-        <a
-          href="#experience"
-          class="nav-pill px-4 py-1.5 rounded-full text-[#46423D]/80 hover:text-[#1D54E8] hover:bg-[#DCE6FF]/60 transition-colors"
-        >
+        <a href="#experience" class="px-3 py-1.5 rounded-lg text-sm font-medium text-secondary hover:text-ink hover:bg-subtle transition-colors">
           Experience
         </a>
-        <a
-          href="#skills"
-          class="nav-pill px-4 py-1.5 rounded-full text-[#46423D]/80 hover:text-[#1D54E8] hover:bg-[#DCE6FF]/60 transition-colors"
-        >
+        <a href="#skills" class="px-3 py-1.5 rounded-lg text-sm font-medium text-secondary hover:text-ink hover:bg-subtle transition-colors">
           Skills
         </a>
-        <a
-          href="#contact"
-          class="nav-pill px-4 py-1.5 rounded-full text-[#46423D]/80 hover:text-[#1D54E8] hover:bg-[#DCE6FF]/60 transition-colors"
-        >
+        <a href="#education" class="px-3 py-1.5 rounded-lg text-sm font-medium text-secondary hover:text-ink hover:bg-subtle transition-colors">
+          Education
+        </a>
+        <a href="#contact" class="px-3 py-1.5 rounded-lg text-sm font-medium text-secondary hover:text-ink hover:bg-subtle transition-colors">
           Contact
         </a>
-      </div>
+      </nav>
 
-      <!-- Right Social Quick Pills & Mobile Trigger -->
+      <!-- Right Utility Actions: Theme Toggle, Social Icons & Primary CTA -->
       <div class="flex items-center gap-2">
+        <!-- Light / Dark Mode Toggle Button -->
+        <button
+          id="theme-toggle-btn"
+          type="button"
+          aria-label="Switch to Dark Mode"
+          title="Toggle Light / Dark Theme"
+          class="p-2 rounded-lg bg-surface border border-hairline text-secondary hover:text-ink hover:bg-subtle transition-colors"
+        >
+          <!-- Sun Icon (shown in Dark Mode to switch to Light) -->
+          <svg id="icon-sun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path stroke-linecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41" />
+          </svg>
+          <!-- Moon Icon (shown in Light Mode to switch to Dark) -->
+          <svg id="icon-moon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg>
+        </button>
+
+        <!-- GitHub Icon Link -->
         <a
           href="https://github.com/itsSana-Noor"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="GitHub Profile"
-          class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F7F6F3] hover:bg-[#DCE6FF] text-[#46423D] hover:text-[#1D54E8] border border-[#46423D]/15 font-mono text-xs font-semibold transition-all"
+          aria-label="Sana Noor on GitHub"
+          title="GitHub (@itsSana-Noor)"
+          class="hidden sm:inline-flex p-2 rounded-lg bg-surface border border-hairline text-secondary hover:text-ink hover:bg-subtle transition-colors"
         >
-          <span>GitHub</span>
-          <span>↗</span>
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+          </svg>
         </a>
 
+        <!-- LinkedIn Icon Link -->
         <a
           href="https://www.linkedin.com/in/sana-noor-449b7a261/"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="LinkedIn Profile"
-          class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#1D54E8] hover:bg-[#1643BD] text-white font-mono text-xs font-semibold transition-all"
+          aria-label="Sana Noor on LinkedIn"
+          title="LinkedIn Profile"
+          class="hidden sm:inline-flex p-2 rounded-lg bg-surface border border-hairline text-secondary hover:text-ink hover:bg-subtle transition-colors"
         >
-          <span>LinkedIn</span>
-          <span>↗</span>
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+          </svg>
         </a>
 
-        <!-- Mobile Drawer Button -->
-        <button
-          id="mobileMenuBtn"
-          type="button"
-          aria-label="Toggle Navigation Menu"
-          aria-expanded="false"
-          class="lg:hidden p-2 rounded-full bg-[#DCE6FF] text-[#1D54E8] hover:bg-[#1D54E8] hover:text-white transition-colors"
+        <!-- Crisp Primary CTA Button -->
+        <a
+          href="#contact"
+          class="px-3.5 py-2 rounded-lg bg-accent hover:bg-accentHover text-white text-xs sm:text-sm font-semibold shadow-sm transition-colors"
         >
-          <svg id="menuOpenIcon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          Get in Touch
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-menu-drawer"
+          aria-label="Toggle Menu"
+          class="md:hidden p-2 rounded-lg bg-surface border border-hairline text-secondary hover:text-ink hover:bg-subtle transition-colors"
+        >
+          <svg id="menu-open-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
-          <svg id="menuCloseIcon" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <svg id="menu-close-icon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
-    </nav>
+    </div>
 
-    <!-- Mobile Dropdown Menu -->
-    <div
-      id="mobileMenu"
-      class="hidden lg:hidden max-w-6xl mx-auto mt-2 bg-white border border-[#46423D]/15 rounded-3xl p-4 shadow-xl space-y-1.5"
-    >
-      <a href="#home" class="mobile-link block px-4 py-2.5 rounded-2xl font-semibold text-sm bg-[#DCE6FF] text-[#1D54E8]">Home</a>
-      <a href="#projects" class="mobile-link block px-4 py-2.5 rounded-2xl font-semibold text-sm text-[#46423D] hover:bg-[#DCE6FF]/60">Projects</a>
-      <a href="#experience" class="mobile-link block px-4 py-2.5 rounded-2xl font-semibold text-sm text-[#46423D] hover:bg-[#DCE6FF]/60">Experience</a>
-      <a href="#skills" class="mobile-link block px-4 py-2.5 rounded-2xl font-semibold text-sm text-[#46423D] hover:bg-[#DCE6FF]/60">Skills</a>
-      <a href="#contact" class="mobile-link block px-4 py-2.5 rounded-2xl font-semibold text-sm text-[#46423D] hover:bg-[#DCE6FF]/60">Contact</a>
-      <div class="pt-2 flex gap-2">
-        <a href="https://github.com/itsSana-Noor" target="_blank" rel="noopener noreferrer" class="flex-1 text-center py-2.5 rounded-2xl bg-[#F7F6F3] border border-[#46423D]/15 font-mono text-xs font-bold text-[#46423D]">GitHub ↗</a>
-        <a href="https://www.linkedin.com/in/sana-noor-449b7a261/" target="_blank" rel="noopener noreferrer" class="flex-1 text-center py-2.5 rounded-2xl bg-[#1D54E8] font-mono text-xs font-bold text-white">LinkedIn ↗</a>
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu-drawer" class="hidden md:hidden border-t border-hairline bg-surface px-4 py-3 space-y-1">
+      <a href="#projects" class="mobile-nav-item block px-3 py-2 rounded-lg text-sm font-medium text-secondary hover:text-ink hover:bg-subtle">Projects</a>
+      <a href="#experience" class="mobile-nav-item block px-3 py-2 rounded-lg text-sm font-medium text-secondary hover:text-ink hover:bg-subtle">Experience</a>
+      <a href="#skills" class="mobile-nav-item block px-3 py-2 rounded-lg text-sm font-medium text-secondary hover:text-ink hover:bg-subtle">Skills</a>
+      <a href="#education" class="mobile-nav-item block px-3 py-2 rounded-lg text-sm font-medium text-secondary hover:text-ink hover:bg-subtle">Education</a>
+      <a href="#contact" class="mobile-nav-item block px-3 py-2 rounded-lg text-sm font-medium text-secondary hover:text-ink hover:bg-subtle">Contact</a>
+      <div class="pt-2 mt-2 border-t border-hairline flex items-center gap-3 px-3">
+        <a href="https://github.com/itsSana-Noor" target="_blank" rel="noopener noreferrer" class="text-xs font-mono font-medium text-secondary hover:text-accent">GitHub ↗</a>
+        <span class="text-muted">•</span>
+        <a href="https://www.linkedin.com/in/sana-noor-449b7a261/" target="_blank" rel="noopener noreferrer" class="text-xs font-mono font-medium text-secondary hover:text-accent">LinkedIn ↗</a>
       </div>
     </div>
   </header>
 
-  <!-- ==================== 2. MAIN EDITORIAL SHEET CONTAINER ==================== -->
-  <main id="home" class="max-w-6xl mx-auto px-3 sm:px-6 pt-5 sm:pt-7 pb-16 space-y-8">
-
-    <!-- ==================== HERO CARD (WARM CHARCOAL #46423D — ZERO PHOTOS) ==================== -->
-    <section class="bg-white rounded-[2.25rem] p-3 sm:p-5 editorial-shadow border border-[#46423D]/10">
-      <div class="relative overflow-hidden rounded-[1.75rem] bg-[#46423D] text-white px-6 sm:px-10 lg:px-12 py-10 sm:py-14">
-
-        <!-- Subtle Geometric Corner Cutout Accent (Top-Left Ring & Bottom-Right Arc) -->
-        <div class="pointer-events-none absolute -top-12 -left-12 w-36 h-36 rounded-full border-[18px] border-white/10"></div>
-        <div class="pointer-events-none absolute -bottom-16 -right-16 w-56 h-56 rounded-full border-[24px] border-white/[0.06]"></div>
-
-        <!-- Subtle Editorial Smiley & Geometric Line-Art Watermark (Center Background) -->
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 260 260"
-          class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-80 h-64 sm:h-80 text-white/[0.06]"
-          fill="none"
-        >
-          <circle cx="130" cy="130" r="108" stroke="currentColor" stroke-width="8" />
-          <circle cx="96" cy="105" r="10" fill="currentColor" />
-          <circle cx="164" cy="105" r="10" fill="currentColor" />
-          <path d="M84 148 C98 178, 162 178, 176 148" stroke="currentColor" stroke-width="8" stroke-linecap="round" />
-        </svg>
-
-        <!-- Two-Column Hero Content Grid -->
-        <div class="relative z-10 grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-
-          <!-- Left Column (7 Cols): Royal Blue Pill, Editorial Headline, Summary & CTAs -->
-          <div class="lg:col-span-7 space-y-5">
-            <!-- Top Editorial Pill Tag -->
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1D54E8] text-white font-mono text-xs font-semibold tracking-wide shadow-sm">
-              <span>AI / ML &amp; Backend Engineering</span>
-            </div>
-
-            <!-- Kicker + Bold Editorial Display Title -->
-            <div>
-              <p class="font-mono text-sm sm:text-base font-medium text-[#DCE6FF] mb-1">
-                Sana Noor :
-              </p>
-              <h1 class="text-3xl sm:text-5xl lg:text-[3.3rem] font-black tracking-tight leading-[1.08] text-white">
-                Engineering Smart ML &amp; Django Systems!
-              </h1>
-            </div>
-
-            <!-- Editorial Bio Copy -->
-            <p class="text-sm sm:text-base text-[#EAEAEA] leading-relaxed max-w-xl">
-              Machine Learning Engineer &amp; Python/Django Developer crafting end-to-end <strong class="font-semibold text-white">NLP classification pipelines</strong>, <strong class="font-semibold text-white">predictive analytics models</strong>, and scalable <strong class="font-semibold text-white">DRF REST APIs</strong>—turning raw data into production-ready applications.
-            </p>
-
-            <!-- Action Row -->
-            <div class="flex flex-wrap items-center gap-3.5 pt-2">
-              <a
-                href="#projects"
-                class="px-6 py-3 rounded-2xl bg-[#1D54E8] hover:bg-[#1643BD] text-white font-bold text-sm royal-shadow hover:-translate-y-0.5 transition-all"
-              >
-                Explore Projects
-              </a>
-
-              <a
-                href="https://tweetboost.streamlit.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="px-5 py-3 rounded-2xl bg-[#DCE6FF] hover:bg-white text-[#1D54E8] font-bold text-sm inline-flex items-center gap-2 hover:-translate-y-0.5 transition-all"
-              >
-                <span class="w-2 h-2 rounded-full bg-[#1D54E8] animate-ping"></span>
-                <span>Live TweetBoost ↗</span>
-              </a>
-
-              <a
-                href="#experience"
-                class="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold text-white/90 hover:text-[#DCE6FF] transition-colors"
-              >
-                <svg class="w-4 h-4 text-[#DCE6FF]" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-                </svg>
-                <span>Learn more</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- Right Column (5 Cols): Text-and-UI-Only Interactive ML & Backend Engineering Highlight Card -->
-          <div class="lg:col-span-5">
-            <div class="relative pt-5">
-              <!-- Floating Crisp White Handle Pill (Inspired by Reference @handle Tag) -->
-              <div class="float-badge relative z-20 inline-flex items-center gap-2.5 bg-white text-[#2B2926] px-4 py-2 rounded-2xl shadow-lg border border-[#46423D]/10 ml-3 -mb-3">
-                <span class="w-2.5 h-2.5 rounded-full bg-[#1D54E8]"></span>
-                <span class="font-mono font-extrabold text-sm tracking-tight text-[#2B2926]">@itsSana-Noor</span>
-                <span class="px-2 py-0.5 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-[10px] font-bold">
-                  VERIFIED
-                </span>
-              </div>
-
-              <!-- Main Royal Blue + Crisp White Text-and-UI Highlight Card -->
-              <div class="relative z-10 rounded-[1.6rem] bg-[#1D54E8] p-5 sm:p-6 text-white royal-shadow border border-white/20">
-                <!-- Role & Live Status Header -->
-                <div class="space-y-2.5 pb-4 border-b border-white/20">
-                  <p class="font-bold text-base sm:text-lg leading-snug text-white">
-                    ML Intern @ Clockwise Capital &bull; Creator of TweetBoost
-                  </p>
-
-                  <!-- Live Availability Pill -->
-                  <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-[#DCE6FF] font-mono text-[11px] font-medium">
-                    <span class="relative flex h-2 w-2">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-                    </span>
-                    <span>Active in FinTech ML &amp; DRF APIs</span>
-                  </div>
-                </div>
-
-                <!-- 3 Key Metrics Bento Grid -->
-                <div class="grid grid-cols-3 gap-2.5 my-4">
-                  <div class="rounded-2xl bg-white text-[#2B2926] p-3 text-center shadow-sm">
-                    <div class="font-mono font-black text-lg sm:text-xl text-[#1D54E8]">6+</div>
-                    <div class="text-[11px] font-bold text-[#46423D] leading-tight mt-0.5">ML &amp; NLP Systems</div>
-                  </div>
-
-                  <div class="rounded-2xl bg-white text-[#2B2926] p-3 text-center shadow-sm">
-                    <div class="font-mono font-black text-lg sm:text-xl text-[#1D54E8]">3</div>
-                    <div class="text-[11px] font-bold text-[#46423D] leading-tight mt-0.5">ML Internships</div>
-                  </div>
-
-                  <div class="rounded-2xl bg-white text-[#2B2926] p-3 text-center shadow-sm">
-                    <div class="font-mono font-black text-lg sm:text-xl text-[#1D54E8]">3.48</div>
-                    <div class="text-[11px] font-bold text-[#46423D] leading-tight mt-0.5">BSCS CGPA</div>
-                  </div>
-                </div>
-
-                <!-- Core Stack Chips -->
-                <div class="flex flex-wrap gap-1.5 mb-4">
-                  <span class="px-2.5 py-1 rounded-lg bg-white/15 font-mono text-[11px] font-semibold text-white">Python</span>
-                  <span class="px-2.5 py-1 rounded-lg bg-white/15 font-mono text-[11px] font-semibold text-white">Scikit-learn</span>
-                  <span class="px-2.5 py-1 rounded-lg bg-white/15 font-mono text-[11px] font-semibold text-white">NLP / TF-IDF</span>
-                  <span class="px-2.5 py-1 rounded-lg bg-white/15 font-mono text-[11px] font-semibold text-white">Django / DRF</span>
-                  <span class="px-2.5 py-1 rounded-lg bg-white/15 font-mono text-[11px] font-semibold text-white">Streamlit</span>
-                </div>
-
-                <!-- Quick-Launch Links Row -->
-                <div class="grid grid-cols-3 gap-2 pt-1">
-                  <a
-                    href="https://tweetboost.streamlit.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="py-2 px-2.5 rounded-xl bg-white hover:bg-[#DCE6FF] text-[#1D54E8] font-mono text-[11px] font-bold text-center transition-colors"
-                  >
-                    TweetBoost ↗
-                  </a>
-                  <a
-                    href="https://github.com/itsSana-Noor"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="py-2 px-2.5 rounded-xl bg-[#46423D] hover:bg-[#36332F] text-white font-mono text-[11px] font-bold text-center transition-colors"
-                  >
-                    GitHub ↗
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/sana-noor-449b7a261/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="py-2 px-2.5 rounded-xl bg-[#46423D] hover:bg-[#36332F] text-white font-mono text-[11px] font-bold text-center transition-colors"
-                  >
-                    LinkedIn ↗
-                  </a>
-                </div>
-              </div>
-
-              <!-- Signature Royal Blue Hand-Drawn Marker Squiggle Accent -->
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 280 24"
-                class="w-48 sm:w-56 h-5 mx-auto mt-2.5 text-[#DCE6FF]"
-                fill="none"
-              >
-                <path
-                  d="M6 15 C38 4, 62 21, 96 11 C130 2, 158 21, 192 11 C224 2, 248 18, 274 9"
-                  stroke="currentColor"
-                  stroke-width="4.5"
-                  stroke-linecap="round"
-                />
-              </svg>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- ==================== HORIZONTAL PENCIL DIVIDER BAR ==================== -->
-      <div class="mt-4 px-3 sm:px-5 py-2.5 rounded-2xl bg-[#F7F6F3] border border-[#46423D]/10 flex flex-col md:flex-row items-center justify-between gap-3">
-        <!-- Left Ticket / Live App Pill -->
-        <div class="flex flex-wrap items-center justify-center gap-2">
-          <span class="font-mono text-[11px] font-bold uppercase tracking-wider text-[#1D54E8]">
-            LIVE APP :
-          </span>
-          <a
-            href="https://tweetboost.streamlit.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="px-3.5 py-1 rounded-full bg-white hover:bg-[#DCE6FF] border border-[#1D54E8]/40 text-[#1D54E8] font-mono text-xs font-semibold transition-colors"
-          >
-            tweetboost.streamlit.app ↗
-          </a>
-        </div>
-
-        <!-- Center Editorial Drafting Pencil SVG Illustration -->
-        <div class="hidden sm:flex items-center justify-center flex-1 max-w-xs px-4" aria-hidden="true">
-          <svg viewBox="0 0 320 20" class="w-full h-4" fill="none">
-            <!-- Eraser & Ferrule -->
-            <rect x="4" y="5" width="16" height="10" rx="3" fill="#1D54E8" />
-            <rect x="20" y="5" width="8" height="10" fill="#46423D" />
-            <!-- Pencil Barrel -->
-            <rect x="28" y="5" width="256" height="10" fill="#DCE6FF" stroke="#46423D" stroke-width="1.2" />
-            <line x1="28" y1="8.5" x2="284" y2="8.5" stroke="#1D54E8" stroke-width="1" />
-            <!-- Sharpened Wood Cone & Graphite Tip -->
-            <polygon points="284,5 308,10 284,15" fill="#F3E5D0" stroke="#46423D" stroke-width="1.2" />
-            <polygon points="301,8.5 314,10 301,11.5" fill="#46423D" />
-          </svg>
-        </div>
-
-        <!-- Right Verified Profile Links -->
-        <div class="flex items-center gap-3 font-mono text-xs font-bold text-[#1D54E8]">
-          <a
-            href="https://github.com/itsSana-Noor"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:underline"
-          >
-            GITHUB.COM/ITSSANA-NOOR ↗
-          </a>
-          <span class="text-[#46423D]/30">&bull;</span>
-          <a
-            href="https://www.linkedin.com/in/sana-noor-449b7a261/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:underline"
-          >
-            LINKEDIN ↗
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 3. PROJECTS SHOWCASE SECTION ==================== -->
-    <section id="projects" class="bg-white rounded-[2.25rem] p-6 sm:p-10 editorial-shadow border border-[#46423D]/10 reveal">
-      <!-- Section Header & Interactive Filter Tabs -->
-      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 pb-6 border-b border-[#46423D]/10">
-        <div>
-          <span class="inline-block px-3.5 py-1 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-bold uppercase tracking-wider mb-2.5">
-            01 // Featured Work
-          </span>
-          <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-[#46423D]">
-            Machine Learning, NLP &amp; Django Systems
-          </h2>
-        </div>
-
-        <!-- Category Filter Tabs -->
-        <div class="flex flex-wrap gap-2" role="tablist" aria-label="Filter projects by category">
-          <button
-            type="button"
-            data-filter="all"
-            class="filter-btn active px-4 py-2 rounded-full font-mono text-xs font-bold bg-[#1D54E8] text-white shadow-sm transition-all"
-          >
-            All (6)
-          </button>
-          <button
-            type="button"
-            data-filter="nlp"
-            class="filter-btn px-4 py-2 rounded-full font-mono text-xs font-bold bg-[#F7F6F3] text-[#46423D] hover:bg-[#DCE6FF] hover:text-[#1D54E8] border border-[#46423D]/15 transition-all"
-          >
-            NLP &amp; Text AI
-          </button>
-          <button
-            type="button"
-            data-filter="ml"
-            class="filter-btn px-4 py-2 rounded-full font-mono text-xs font-bold bg-[#F7F6F3] text-[#46423D] hover:bg-[#DCE6FF] hover:text-[#1D54E8] border border-[#46423D]/15 transition-all"
-          >
-            ML Prediction
-          </button>
-          <button
-            type="button"
-            data-filter="fullstack"
-            class="filter-btn px-4 py-2 rounded-full font-mono text-xs font-bold bg-[#F7F6F3] text-[#46423D] hover:bg-[#DCE6FF] hover:text-[#1D54E8] border border-[#46423D]/15 transition-all"
-          >
-            Full-Stack &amp; Live
-          </button>
-        </div>
-      </div>
-
-      <!-- 6 Project Cards Grid -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        <!-- 1. Fake News Detection System (FYP) -->
-        <article
-          data-categories="nlp fullstack"
-          class="project-card rounded-3xl bg-[#F7F6F3] border border-[#46423D]/15 hover:border-[#1D54E8] p-6 flex flex-col justify-between transition-all hover:-translate-y-1"
-        >
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="px-3 py-1 rounded-full bg-[#46423D] text-white font-mono text-[11px] font-bold">
-                FINAL YEAR PROJECT
-              </span>
-              <span class="font-mono text-xs font-bold text-[#46423D]/50">01</span>
-            </div>
-
-            <h3 class="text-xl font-extrabold text-[#46423D] leading-snug">
-              Fake News Detection System
-            </h3>
-
-            <p class="text-sm text-[#46423D]/80 leading-relaxed mt-3">
-              Built a text classification system that labels news content as real or fake using text preprocessing, TF-IDF vectorization, and Logistic Regression—evaluated, saved, and integrated into a Django web application with a custom frontend.
-            </p>
-          </div>
-
-          <div class="mt-6 pt-4 border-t border-[#46423D]/10">
-            <div class="flex flex-wrap gap-1.5 mb-4">
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Python</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">TF-IDF</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Logistic Regression</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Django</span>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <button
-                type="button"
-                onclick="openPipelineModal('fakenews')"
-                class="flex-1 py-2.5 px-3.5 rounded-2xl bg-[#DCE6FF] hover:bg-[#1D54E8] text-[#1D54E8] hover:text-white font-mono text-xs font-bold transition-colors"
-              >
-                Inspect Pipeline
-              </button>
-              <a
-                href="https://github.com/itsSana-Noor"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="py-2.5 px-3.5 rounded-2xl bg-white hover:bg-[#46423D] text-[#46423D] hover:text-white border border-[#46423D]/15 font-mono text-xs font-bold transition-colors"
-              >
-                GitHub ↗
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- 2. TweetBoost — Virality Predictor (LIVE) -->
-        <article
-          data-categories="nlp fullstack"
-          class="project-card rounded-3xl bg-[#F7F6F3] border-2 border-[#1D54E8] p-6 flex flex-col justify-between transition-all hover:-translate-y-1 shadow-md"
-        >
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1D54E8] text-white font-mono text-[11px] font-bold">
-                <span class="w-2 h-2 rounded-full bg-[#DCE6FF] animate-ping"></span>
-                LIVE DEPLOYED
-              </span>
-              <span class="font-mono text-xs font-bold text-[#1D54E8]">02</span>
-            </div>
-
-            <h3 class="text-xl font-extrabold text-[#46423D] leading-snug">
-              TweetBoost — Virality Predictor
-            </h3>
-
-            <p class="text-sm text-[#46423D]/80 leading-relaxed mt-3">
-              Production-deployed NLP &amp; ML classification app predicting tweet virality and engagement potential in real time using engineered lexical features and Streamlit interactive inference.
-            </p>
-          </div>
-
-          <div class="mt-6 pt-4 border-t border-[#46423D]/10">
-            <div class="flex flex-wrap gap-1.5 mb-4">
-              <span class="px-2.5 py-1 rounded-lg bg-[#DCE6FF] font-mono text-[11px] font-bold text-[#1D54E8]">Streamlit</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Python</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">NLP Features</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">ML Classification</span>
-            </div>
-
-            <div class="space-y-2">
-              <a
-                href="https://tweetboost.streamlit.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="w-full py-2.5 px-4 rounded-2xl bg-[#1D54E8] hover:bg-[#1643BD] text-white font-mono text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
-              >
-                <span>Open Live App ↗</span>
-              </a>
-              <div class="flex items-center gap-2">
-                <button
-                  type="button"
-                  onclick="openPipelineModal('tweetboost')"
-                  class="flex-1 py-2 px-3 rounded-2xl bg-[#DCE6FF] hover:bg-[#46423D] text-[#1D54E8] hover:text-white font-mono text-xs font-bold transition-colors"
-                >
-                  Inspect Pipeline
-                </button>
-                <a
-                  href="https://github.com/itsSana-Noor"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="py-2 px-3.5 rounded-2xl bg-white hover:bg-[#46423D] text-[#46423D] hover:text-white border border-[#46423D]/15 font-mono text-xs font-bold transition-colors"
-                >
-                  GitHub ↗
-                </a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- 3. Loan Prediction System -->
-        <article
-          data-categories="ml"
-          class="project-card rounded-3xl bg-[#F7F6F3] border border-[#46423D]/15 hover:border-[#1D54E8] p-6 flex flex-col justify-between transition-all hover:-translate-y-1"
-        >
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="px-3 py-1 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-[11px] font-bold">
-                FINTECH ML
-              </span>
-              <span class="font-mono text-xs font-bold text-[#46423D]/50">03</span>
-            </div>
-
-            <h3 class="text-xl font-extrabold text-[#46423D] leading-snug">
-              Loan Prediction System
-            </h3>
-
-            <p class="text-sm text-[#46423D]/80 leading-relaxed mt-3">
-              Automated loan approval classification pipeline engineered with Pandas and Scikit-learn, featuring missing-value imputation, categorical feature encoding, and cross-validated model evaluation.
-            </p>
-          </div>
-
-          <div class="mt-6 pt-4 border-t border-[#46423D]/10">
-            <div class="flex flex-wrap gap-1.5 mb-4">
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Python</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Scikit-learn</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Pandas</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Feature Engineering</span>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <button
-                type="button"
-                onclick="openPipelineModal('loan')"
-                class="flex-1 py-2.5 px-3.5 rounded-2xl bg-[#DCE6FF] hover:bg-[#1D54E8] text-[#1D54E8] hover:text-white font-mono text-xs font-bold transition-colors"
-              >
-                Inspect Pipeline
-              </button>
-              <a
-                href="https://github.com/itsSana-Noor"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="py-2.5 px-3.5 rounded-2xl bg-white hover:bg-[#46423D] text-[#46423D] hover:text-white border border-[#46423D]/15 font-mono text-xs font-bold transition-colors"
-              >
-                GitHub ↗
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- 4. Credit Scoring System -->
-        <article
-          data-categories="ml"
-          class="project-card rounded-3xl bg-[#F7F6F3] border border-[#46423D]/15 hover:border-[#1D54E8] p-6 flex flex-col justify-between transition-all hover:-translate-y-1"
-        >
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="px-3 py-1 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-[11px] font-bold">
-                CREDIT RISK ML
-              </span>
-              <span class="font-mono text-xs font-bold text-[#46423D]/50">04</span>
-            </div>
-
-            <h3 class="text-xl font-extrabold text-[#46423D] leading-snug">
-              Credit Scoring System
-            </h3>
-
-            <p class="text-sm text-[#46423D]/80 leading-relaxed mt-3">
-              Financial creditworthiness classification system evaluating applicant default risk through structured data preprocessing, debt-to-income ratio engineering, and supervised ML model evaluation.
-            </p>
-          </div>
-
-          <div class="mt-6 pt-4 border-t border-[#46423D]/10">
-            <div class="flex flex-wrap gap-1.5 mb-4">
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Python</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Scikit-learn</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Risk Classification</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Model Evaluation</span>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <button
-                type="button"
-                onclick="openPipelineModal('credit')"
-                class="flex-1 py-2.5 px-3.5 rounded-2xl bg-[#DCE6FF] hover:bg-[#1D54E8] text-[#1D54E8] hover:text-white font-mono text-xs font-bold transition-colors"
-              >
-                Inspect Pipeline
-              </button>
-              <a
-                href="https://github.com/itsSana-Noor"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="py-2.5 px-3.5 rounded-2xl bg-white hover:bg-[#46423D] text-[#46423D] hover:text-white border border-[#46423D]/15 font-mono text-xs font-bold transition-colors"
-              >
-                GitHub ↗
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- 5. Movie Recommendation System -->
-        <article
-          data-categories="nlp ml"
-          class="project-card rounded-3xl bg-[#F7F6F3] border border-[#46423D]/15 hover:border-[#1D54E8] p-6 flex flex-col justify-between transition-all hover:-translate-y-1"
-        >
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="px-3 py-1 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-[11px] font-bold">
-                RECSYS &amp; NLP
-              </span>
-              <span class="font-mono text-xs font-bold text-[#46423D]/50">05</span>
-            </div>
-
-            <h3 class="text-xl font-extrabold text-[#46423D] leading-snug">
-              Movie Recommendation System
-            </h3>
-
-            <p class="text-sm text-[#46423D]/80 leading-relaxed mt-3">
-              Content-based filtering engine combining metadata tag engineering, NLP text vectorization, and NumPy/Scikit-learn cosine similarity matrices to surface personalized film recommendations.
-            </p>
-          </div>
-
-          <div class="mt-6 pt-4 border-t border-[#46423D]/10">
-            <div class="flex flex-wrap gap-1.5 mb-4">
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Python</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Pandas &amp; NumPy</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Content-Based Filtering</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Cosine Similarity</span>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <button
-                type="button"
-                onclick="openPipelineModal('movie')"
-                class="flex-1 py-2.5 px-3.5 rounded-2xl bg-[#DCE6FF] hover:bg-[#1D54E8] text-[#1D54E8] hover:text-white font-mono text-xs font-bold transition-colors"
-              >
-                Inspect Pipeline
-              </button>
-              <a
-                href="https://github.com/itsSana-Noor"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="py-2.5 px-3.5 rounded-2xl bg-white hover:bg-[#46423D] text-[#46423D] hover:text-white border border-[#46423D]/15 font-mono text-xs font-bold transition-colors"
-              >
-                GitHub ↗
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- 6. Diabetes Prediction System -->
-        <article
-          data-categories="ml"
-          class="project-card rounded-3xl bg-[#F7F6F3] border border-[#46423D]/15 hover:border-[#1D54E8] p-6 flex flex-col justify-between transition-all hover:-translate-y-1"
-        >
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="px-3 py-1 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-[11px] font-bold">
-                HEALTHCARE ML
-              </span>
-              <span class="font-mono text-xs font-bold text-[#46423D]/50">06</span>
-            </div>
-
-            <h3 class="text-xl font-extrabold text-[#46423D] leading-snug">
-              Diabetes Prediction System
-            </h3>
-
-            <p class="text-sm text-[#46423D]/80 leading-relaxed mt-3">
-              Healthcare predictive modeling pipeline forecasting diabetes risk from clinical biomarkers using diagnostic feature scaling, Logistic Regression, and recall-focused evaluation.
-            </p>
-          </div>
-
-          <div class="mt-6 pt-4 border-t border-[#46423D]/10">
-            <div class="flex flex-wrap gap-1.5 mb-4">
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Python</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Scikit-learn</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Logistic Regression</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#46423D]/10 font-mono text-[11px] font-semibold text-[#46423D]">Healthcare ML</span>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <button
-                type="button"
-                onclick="openPipelineModal('diabetes')"
-                class="flex-1 py-2.5 px-3.5 rounded-2xl bg-[#DCE6FF] hover:bg-[#1D54E8] text-[#1D54E8] hover:text-white font-mono text-xs font-bold transition-colors"
-              >
-                Inspect Pipeline
-              </button>
-              <a
-                href="https://github.com/itsSana-Noor"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="py-2.5 px-3.5 rounded-2xl bg-white hover:bg-[#46423D] text-[#46423D] hover:text-white border border-[#46423D]/15 font-mono text-xs font-bold transition-colors"
-              >
-                GitHub ↗
-              </a>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- ==================== 4. EXPERIENCE, EDUCATION & CERTIFICATIONS ==================== -->
-    <section id="experience" class="grid lg:grid-cols-12 gap-8 reveal">
-
-      <!-- Left Column (7 Cols): Industry Internships -->
-      <div class="lg:col-span-7 bg-white rounded-[2.25rem] p-6 sm:p-9 editorial-shadow border border-[#46423D]/10">
-        <span class="inline-block px-3.5 py-1 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-bold uppercase tracking-wider mb-2.5">
-          02 // Experience
-        </span>
-        <h2 class="text-2xl sm:text-3xl font-black tracking-tight text-[#46423D] mb-7">
-          Industry Internships
-        </h2>
-
-        <div class="space-y-5">
-          <!-- 1. Clockwise Capital (CURRENT) -->
-          <div class="rounded-3xl bg-[#46423D] text-white p-6 relative overflow-hidden">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <span class="px-3 py-1 rounded-full bg-[#1D54E8] text-white font-mono text-[11px] font-bold uppercase tracking-wider">
-                CURRENT &bull; 2026 – PRESENT
-              </span>
-              <span class="font-mono text-xs text-[#DCE6FF]">FinTech &amp; AI</span>
-            </div>
-
-            <h3 class="text-xl font-extrabold text-white mt-2">
-              Software / ML Engineering Intern
-            </h3>
-            <p class="font-semibold text-sm text-[#DCE6FF] mt-0.5">
-              Clockwise Capital
-            </p>
-            <p class="text-sm text-[#EAEAEA] leading-relaxed mt-3">
-             Collaborating across two cross-functional teams to develop and integrate a unified project within a live FinTech and investment analytics environment.
-            </p>
-          </div>
-
-          <!-- 2. Global Institute of Science and Technology -->
-          <div class="rounded-3xl bg-[#F7F6F3] border border-[#46423D]/15 p-6">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <span class="px-3 py-1 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-[11px] font-bold">
-                2026
-              </span>
-              <span class="font-mono text-xs text-[#46423D]/60">Machine Learning</span>
-            </div>
-
-            <h3 class="text-lg font-extrabold text-[#46423D]">
-              Machine Learning Intern
-            </h3>
-            <p class="font-semibold text-sm text-[#1D54E8] mt-0.5">
-              Global Institute of Science and Technology
-            </p>
-            <p class="text-sm text-[#46423D]/80 leading-relaxed mt-2.5">
-              Used Python and Scikit-learn for practical machine-learning and data-science projects. Applied data preprocessing, feature engineering, model training, evaluation, and performance analysis.
-            </p>
-          </div>
-
-          <!-- 3. CodeAlpha -->
-          <div class="rounded-3xl bg-[#F7F6F3] border border-[#46423D]/15 p-6">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <span class="px-3 py-1 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-[11px] font-bold">
-                2026
-              </span>
-              <span class="font-mono text-xs text-[#46423D]/60">Predictive Systems</span>
-            </div>
-
-            <h3 class="text-lg font-extrabold text-[#46423D]">
-              Machine Learning Intern
-            </h3>
-            <p class="font-semibold text-sm text-[#1D54E8] mt-0.5">
-              CodeAlpha
-            </p>
-            <p class="text-sm text-[#46423D]/80 leading-relaxed mt-2.5">
-              Developed prediction and classification projects using Python and machine-learning workflows—completing the <strong class="font-semibold text-[#46423D]">Loan Prediction</strong>, <strong class="font-semibold text-[#46423D]">Diabetes Prediction</strong>, and <strong class="font-semibold text-[#46423D]">Credit Scoring</strong> systems.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column (5 Cols): Education & Certifications -->
-      <div class="lg:col-span-5 flex flex-col gap-8">
-        <!-- Education Card -->
-        <div class="bg-white rounded-[2.25rem] p-6 sm:p-9 editorial-shadow border border-[#46423D]/10">
-          <span class="inline-block px-3.5 py-1 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-bold uppercase tracking-wider mb-2.5">
-            03 // Education
-          </span>
-          <h2 class="text-2xl font-black tracking-tight text-[#46423D] mb-5">
-            Academic Background
-          </h2>
-
-          <div class="rounded-3xl bg-[#F7F6F3] border border-[#46423D]/15 p-6">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-              <span class="px-3 py-1 rounded-full bg-white border border-[#46423D]/15 font-mono text-xs font-bold text-[#46423D]">
-                2023 – 2027 (In Progress)
-              </span>
-              <span class="px-3 py-1 rounded-full bg-[#1D54E8] text-white font-mono text-xs font-bold">
-                CGPA: 3.48 / 4.00
-              </span>
-            </div>
-
-            <h3 class="text-lg font-extrabold text-[#46423D] leading-snug">
-              Bachelor of Science in Computer Science (BSCS)
-            </h3>
-            <p class="font-semibold text-sm text-[#1D54E8] mt-1">
-              Virtual University of Pakistan
-            </p>
-            <p class="text-sm text-[#46423D]/80 leading-relaxed mt-3">
-          
-            </p>
-          </div>
-        </div>
-
-        <!-- Certifications Card -->
-        <div class="bg-white rounded-[2.25rem] p-6 sm:p-9 editorial-shadow border border-[#46423D]/10 flex-1">
-          <span class="inline-block px-3.5 py-1 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-bold uppercase tracking-wider mb-2.5">
-            04 // Credentials
-          </span>
-          <h2 class="text-2xl font-black tracking-tight text-[#46423D] mb-5">
-            Certifications
-          </h2>
-
-          <ul class="space-y-3">
-            <li class="p-4 rounded-2xl bg-[#F7F6F3] border border-[#46423D]/10 flex items-center gap-3.5">
-              <span class="w-8 h-8 rounded-xl bg-[#1D54E8] text-white font-mono text-xs font-bold flex items-center justify-center shrink-0">
-                01
-              </span>
-              <div>
-                <div class="font-bold text-sm text-[#46423D]">Python for Everybody</div>
-                <div class="text-xs text-[#46423D]/70">Core Python &amp; Data Processing</div>
-              </div>
-            </li>
-
-            <li class="p-4 rounded-2xl bg-[#F7F6F3] border border-[#46423D]/10 flex items-center gap-3.5">
-              <span class="w-8 h-8 rounded-xl bg-[#1D54E8] text-white font-mono text-xs font-bold flex items-center justify-center shrink-0">
-                02
-              </span>
-              <div>
-                <div class="font-bold text-sm text-[#46423D]">Machine Learning for All</div>
-                <div class="text-xs text-[#46423D]/70">Supervised Models &amp; Evaluation</div>
-              </div>
-            </li>
-
-            <li class="p-4 rounded-2xl bg-[#F7F6F3] border border-[#46423D]/10 flex items-center gap-3.5">
-              <span class="w-8 h-8 rounded-xl bg-[#1D54E8] text-white font-mono text-xs font-bold flex items-center justify-center shrink-0">
-                03
-              </span>
-              <div>
-                <div class="font-bold text-sm text-[#46423D]">Freelancing Certificate</div>
-                <div class="text-xs text-[#46423D]/70">Client Delivery &amp; Project Execution</div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ==================== 5. CATEGORIZED TECHNICAL SKILLS SECTION ==================== -->
-    <section id="skills" class="bg-[#46423D] text-white rounded-[2.25rem] p-6 sm:p-10 editorial-shadow reveal">
-      <div class="max-w-2xl mb-8">
-        <span class="inline-block px-3.5 py-1 rounded-full bg-[#1D54E8] text-white font-mono text-xs font-bold uppercase tracking-wider mb-2.5">
-          05 // Technical Toolkit
-        </span>
-        <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-white">
-          Categorized Skills &amp; Technologies
-        </h2>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <!-- Programming -->
-        <div class="rounded-3xl bg-white text-[#46423D] p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="w-9 h-9 rounded-xl bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-extrabold flex items-center justify-center">
-              &lt;/&gt;
+  <main id="top" class="hero-ambient">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-20 space-y-20 sm:space-y-28">
+
+      <!-- =====================================================================
+           2. HERO SECTION (2-COLUMN ASYMMETRIC ARCHITECTURAL GRID)
+           ===================================================================== -->
+      <section aria-labelledby="hero-heading" class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+
+        <!-- Left Column (7 cols): Executive Identity, Bio, CTAs & Social Row -->
+        <div class="lg:col-span-7 space-y-6">
+          <!-- Status Pill with Pulsing Emerald Dot -->
+          <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full pill-live">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-live opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-live"></span>
             </span>
-            <h3 class="font-extrabold text-lg">Programming</h3>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Python</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">HTML</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">CSS</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">JavaScript</span>
-          </div>
-        </div>
-
-        <!-- AI / Machine Learning -->
-        <div class="rounded-3xl bg-white text-[#46423D] p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="w-9 h-9 rounded-xl bg-[#1D54E8] text-white font-mono text-xs font-extrabold flex items-center justify-center">
-              ML
+            <span class="font-mono text-xs font-medium tracking-tight">
+              Currently ML Intern @ Clockwise Capital
             </span>
-            <h3 class="font-extrabold text-lg">AI &amp; Machine Learning</h3>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1.5 rounded-xl bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-bold">Scikit-learn</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Logistic Regression</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Classification</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Prediction Systems</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Model Evaluation</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Model Saving &amp; Deployment</span>
-          </div>
-        </div>
 
-        <!-- NLP -->
-        <div class="rounded-3xl bg-white text-[#46423D] p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="w-9 h-9 rounded-xl bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-extrabold flex items-center justify-center">
-              NLP
-            </span>
-            <h3 class="font-extrabold text-lg">Natural Language Processing</h3>
+          <!-- Headline & Gradient-Accented Role Subtitle -->
+          <div class="space-y-2">
+            <h1 id="hero-heading" class="text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold tracking-tight text-ink leading-[1.08]">
+              Sana Noor
+            </h1>
+            <p class="text-2xl sm:text-3xl lg:text-[2rem] font-bold tracking-tight gradient-role-text leading-tight">
+              Machine Learning &amp; Backend Engineer
+            </p>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Text Preprocessing</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-bold">TF-IDF</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Feature Extraction</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Text Classification</span>
-          </div>
-        </div>
 
-        <!-- APIs & Backend -->
-        <div class="rounded-3xl bg-white text-[#46423D] p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="w-9 h-9 rounded-xl bg-[#1D54E8] text-white font-mono text-xs font-extrabold flex items-center justify-center">
-              API
-            </span>
-            <h3 class="font-extrabold text-lg">APIs &amp; Backend</h3>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1.5 rounded-xl bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-bold">Django</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-bold">Django REST Framework</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">REST APIs (Building &amp; Consuming)</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">SimpleJWT</span>
-          </div>
-        </div>
-
-        <!-- Data & Developer Tools -->
-        <div class="md:col-span-2 rounded-3xl bg-white text-[#46423D] p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="w-9 h-9 rounded-xl bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-extrabold flex items-center justify-center">
-              DATA
-            </span>
-            <h3 class="font-extrabold text-lg">Data Engineering &amp; Tools</h3>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Pandas</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">NumPy</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Data Preprocessing</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Feature Engineering</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-bold">Git / GitHub</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-bold">Streamlit</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">VS Code</span>
-            <span class="px-3 py-1.5 rounded-xl bg-[#F7F6F3] border border-[#46423D]/10 font-mono text-xs font-semibold">Jupyter Notebook</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 6. CONTACT SECTION ==================== -->
-    <section id="contact" class="bg-white rounded-[2.25rem] p-6 sm:p-10 editorial-shadow border border-[#46423D]/10 reveal">
-      <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-
-        <!-- Left Column: Direct Links -->
-        <div class="lg:col-span-5 space-y-4">
-          <span class="inline-block px-3.5 py-1 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-bold uppercase tracking-wider">
-            06 // Get in Touch
-          </span>
-          <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-[#46423D]">
-            Let’s Collaborate
-          </h2>
-          <p class="text-sm sm:text-base text-[#46423D]/80 leading-relaxed">
-            Open to Machine Learning, NLP, and Python/Django REST API roles or freelance backend projects. Reach out directly through any channel below.
+          <!-- Executive Engineering Bio -->
+          <p class="text-base sm:text-lg text-secondary leading-relaxed max-w-2xl">
+            Building end-to-end NLP pipelines, predictive classification systems, and production REST APIs with <span class="text-ink font-semibold">Python</span>, <span class="text-ink font-semibold">Scikit-learn</span>, <span class="text-ink font-semibold">Django</span>, and <span class="text-ink font-semibold">Django REST Framework</span>.
           </p>
 
-          <div class="space-y-3 pt-2">
+          <!-- Primary CTA Buttons -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
             <a
-              href="https://github.com/itsSana-Noor"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center justify-between p-4 rounded-2xl bg-[#F7F6F3] hover:bg-[#DCE6FF] border border-[#46423D]/15 transition-colors group"
+              href="#projects"
+              class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-accent hover:bg-accentHover text-white font-semibold text-sm shadow-sm transition-all"
             >
-              <div>
-                <div class="font-extrabold text-sm text-[#46423D] group-hover:text-[#1D54E8]">GitHub</div>
-                <div class="font-mono text-xs text-[#46423D]/70">github.com/itsSana-Noor</div>
-              </div>
-              <span class="font-mono font-bold text-sm text-[#1D54E8]">↗</span>
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/sana-noor-449b7a261/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center justify-between p-4 rounded-2xl bg-[#F7F6F3] hover:bg-[#DCE6FF] border border-[#46423D]/15 transition-colors group"
-            >
-              <div>
-                <div class="font-extrabold text-sm text-[#46423D] group-hover:text-[#1D54E8]">LinkedIn</div>
-                <div class="font-mono text-xs text-[#46423D]/70">linkedin.com/in/sana-noor-449b7a261</div>
-              </div>
-              <span class="font-mono font-bold text-sm text-[#1D54E8]">↗</span>
+              <span>View Selected Work</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
 
             <a
               href="https://tweetboost.streamlit.app/"
               target="_blank"
               rel="noopener noreferrer"
-              class="flex items-center justify-between p-4 rounded-2xl bg-[#1D54E8] hover:bg-[#1643BD] text-white transition-colors"
+              class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-surface hover:bg-subtle text-ink border border-hairline font-semibold text-sm transition-all"
             >
-              <div>
-                <div class="font-extrabold text-sm">TweetBoost Virality Predictor</div>
-                <div class="font-mono text-xs text-[#DCE6FF]">tweetboost.streamlit.app</div>
-              </div>
-              <span class="font-mono font-bold text-sm">↗</span>
+              <span class="w-2 h-2 rounded-full bg-live"></span>
+              <span>Launch TweetBoost ↗</span>
+            </a>
+          </div>
+
+          <!-- Clean Social Link Row -->
+          <div class="pt-2 flex flex-wrap items-center gap-5 text-sm font-medium text-secondary">
+            <a
+              href="https://github.com/itsSana-Noor"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 hover:text-ink transition-colors"
+            >
+              <svg class="w-4 h-4 text-muted" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+              </svg>
+              <span>GitHub</span>
+              <span class="font-mono text-xs text-muted">(@itsSana-Noor)</span>
+            </a>
+
+            <span class="text-hairline">|</span>
+
+            <a
+              href="https://www.linkedin.com/in/sana-noor-449b7a261/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 hover:text-ink transition-colors"
+            >
+              <svg class="w-4 h-4 text-muted" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+              </svg>
+              <span>LinkedIn</span>
+              <span class="font-mono text-xs text-muted">/in/sana-noor</span>
             </a>
           </div>
         </div>
 
-        <!-- Right Column: Quick Message Form -->
-        <div class="lg:col-span-7 rounded-3xl bg-[#F7F6F3] border border-[#46423D]/15 p-6 sm:p-8">
-          <form id="contactForm" novalidate class="space-y-4">
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label for="contactName" class="block font-mono text-xs font-bold uppercase tracking-wider text-[#46423D] mb-1.5">
-                  Name
-                </label>
-                <input
-                  id="contactName"
-                  type="text"
-                  required
-                  placeholder="Your name"
-                  class="w-full px-4 py-3 rounded-2xl bg-white border border-[#46423D]/20 focus:border-[#1D54E8] text-sm text-[#2B2926] focus:outline-none transition-colors"
-                />
-                <p id="nameError" class="hidden text-xs text-rose-600 font-semibold mt-1">Please enter your name.</p>
-              </div>
+        <!-- Right Column (5 cols): Text & UI-Only Engineering Overview Card (No Photo) -->
+        <div class="lg:col-span-5">
+          <div class="exec-card arch-dot-grid rounded-2xl p-6 sm:p-7 space-y-6">
 
-              <div>
-                <label for="contactEmail" class="block font-mono text-xs font-bold uppercase tracking-wider text-[#46423D] mb-1.5">
-                  Email
-                </label>
-                <input
-                  id="contactEmail"
-                  type="email"
-                  required
-                  placeholder="you@example.com"
-                  class="w-full px-4 py-3 rounded-2xl bg-white border border-[#46423D]/20 focus:border-[#1D54E8] text-sm text-[#2B2926] focus:outline-none transition-colors"
-                />
-                <p id="emailError" class="hidden text-xs text-rose-600 font-semibold mt-1">Please enter a valid email address.</p>
+            <!-- Card Header Bar -->
+            <div class="flex items-center justify-between gap-2 pb-4 border-b border-hairline">
+              <span class="font-mono text-[11px] font-semibold tracking-wider uppercase text-secondary">
+                ENGINEERING OVERVIEW
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full pill-accent font-mono text-[10px] font-semibold uppercase tracking-wide">
+                <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                OPEN TO COLLABORATION
+              </span>
+            </div>
+
+            <!-- 3 Crisp KPI Metric Tiles -->
+            <div class="grid grid-cols-3 gap-3">
+              <div class="bg-surface/95 rounded-xl border border-hairline p-3.5">
+                <span class="block font-mono text-xl sm:text-2xl font-semibold text-ink tracking-tight">6+</span>
+                <span class="block text-[11px] font-medium text-secondary mt-1 leading-snug">ML &amp; NLP Systems</span>
+              </div>
+              <div class="bg-surface/95 rounded-xl border border-hairline p-3.5">
+                <span class="block font-mono text-xl sm:text-2xl font-semibold text-ink tracking-tight">3</span>
+                <span class="block text-[11px] font-medium text-secondary mt-1 leading-snug">ML Internships</span>
+              </div>
+              <div class="bg-surface/95 rounded-xl border border-hairline p-3.5">
+                <span class="block font-mono text-xl sm:text-2xl font-semibold text-accent tracking-tight">3.48</span>
+                <span class="block text-[11px] font-medium text-secondary mt-1 leading-snug">BSCS CGPA / 4.00</span>
               </div>
             </div>
 
-            <div>
-              <label for="contactMessage" class="block font-mono text-xs font-bold uppercase tracking-wider text-[#46423D] mb-1.5">
-                Message
-              </label>
-              <textarea
-                id="contactMessage"
-                rows="4"
-                required
-                placeholder="Tell me about your ML project, NLP system, or Django REST API requirements..."
-                class="w-full px-4 py-3 rounded-2xl bg-white border border-[#46423D]/20 focus:border-[#1D54E8] text-sm text-[#2B2926] focus:outline-none transition-colors resize-none"
-              ></textarea>
-              <p id="messageError" class="hidden text-xs text-rose-600 font-semibold mt-1">Please write at least 10 characters.</p>
+            <!-- Core Production Stack Preview Block -->
+            <div class="bg-subtle/80 rounded-xl border border-hairline p-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
+                  Core Production Stack
+                </span>
+                <span class="font-mono text-[11px] text-tealAccent font-medium">v2026</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 rounded-md bg-surface border border-hairline font-mono text-xs font-medium text-ink">Python</span>
+                <span class="px-2.5 py-1 rounded-md bg-surface border border-hairline font-mono text-xs font-medium text-ink">Scikit-learn</span>
+                <span class="px-2.5 py-1 rounded-md bg-surface border border-hairline font-mono text-xs font-medium text-ink">TF-IDF &amp; NLP</span>
+                <span class="px-2.5 py-1 rounded-md bg-surface border border-hairline font-mono text-xs font-medium text-ink">Django &amp; DRF</span>
+                <span class="px-2.5 py-1 rounded-md bg-surface border border-hairline font-mono text-xs font-medium text-ink">SimpleJWT</span>
+                <span class="px-2.5 py-1 rounded-md bg-surface border border-hairline font-mono text-xs font-medium text-ink">Pandas &amp; NumPy</span>
+                <span class="px-2.5 py-1 rounded-md bg-surface border border-hairline font-mono text-xs font-medium text-ink">Streamlit</span>
+              </div>
             </div>
 
-            <button
-              type="submit"
-              class="w-full py-3.5 px-6 rounded-2xl bg-[#1D54E8] hover:bg-[#1643BD] text-white font-bold text-sm royal-shadow transition-all"
+            <!-- Live Featured Deployment Bar -->
+            <a
+              href="https://tweetboost.streamlit.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group flex items-center justify-between gap-3 p-3.5 rounded-xl bg-surface hover:bg-subtle border border-hairline transition-colors"
             >
-              Send Message
-            </button>
-          </form>
+              <div class="flex items-center gap-3 min-w-0">
+                <span class="relative flex h-2.5 w-2.5 shrink-0">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-live opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-live"></span>
+                </span>
+                <div class="truncate">
+                  <span class="block font-mono text-[10px] uppercase tracking-wider text-muted font-semibold">
+                    Live Featured Deployment
+                  </span>
+                  <span class="block text-xs sm:text-sm font-semibold text-ink truncate group-hover:text-accent transition-colors">
+                    TweetBoost — Real-Time Virality Predictor
+                  </span>
+                </div>
+              </div>
+              <span class="font-mono text-xs font-semibold text-accent shrink-0 group-hover:translate-x-0.5 transition-transform">
+                Launch ↗
+              </span>
+            </a>
 
-          <!-- Form Success Feedback -->
-          <div id="formSuccessState" class="hidden text-center py-8 space-y-3">
-            <div class="w-12 h-12 rounded-full bg-[#1D54E8] text-white font-mono font-bold text-lg flex items-center justify-center mx-auto">
-              ✓
-            </div>
-            <h3 class="text-xl font-extrabold text-[#46423D]">Message Sent!</h3>
-            <p id="formSuccessText" class="text-sm text-[#46423D]/80 max-w-md mx-auto"></p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =====================================================================
+           3. PROJECTS SECTION (#projects) + INTERACTIVE FILTER TABS
+           ===================================================================== -->
+      <section id="projects" class="scroll-mt-24 space-y-8">
+        <!-- Section Header & Interactive Filter Tabs -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 pb-6 border-b border-hairline">
+          <div class="space-y-2">
+            <span class="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+              01 // Selected Engineering Systems
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-ink">
+              Featured ML, NLP &amp; Backend Projects
+            </h2>
+            <p class="text-sm sm:text-base text-secondary max-w-2xl">
+              Production-oriented classification models, NLP text pipelines, and Django web applications. Select <span class="font-medium text-ink">Inspect Pipeline</span> to examine each 5-stage system architecture.
+            </p>
+          </div>
+
+          <!-- Filter Tabs -->
+          <div role="tablist" aria-label="Filter projects by engineering domain" class="flex flex-wrap items-center gap-1.5 bg-subtle p-1 rounded-xl border border-hairline self-start lg:self-auto">
             <button
               type="button"
-              onclick="resetContactForm()"
-              class="px-5 py-2.5 rounded-2xl bg-white border border-[#46423D]/20 font-mono text-xs font-bold text-[#46423D] hover:bg-[#DCE6FF] hover:text-[#1D54E8] transition-colors"
+              data-filter="all"
+              class="project-filter-tab active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-surface text-ink shadow-sm border border-hairline transition-all"
             >
-              Send Another Message
+              All Projects (6)
+            </button>
+            <button
+              type="button"
+              data-filter="nlp"
+              class="project-filter-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:text-ink border border-transparent transition-all"
+            >
+              NLP &amp; Live Apps
+            </button>
+            <button
+              type="button"
+              data-filter="ml"
+              class="project-filter-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:text-ink border border-transparent transition-all"
+            >
+              ML &amp; Predictive
+            </button>
+            <button
+              type="button"
+              data-filter="django"
+              class="project-filter-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:text-ink border border-transparent transition-all"
+            >
+              Django &amp; Backend
             </button>
           </div>
         </div>
 
-      </div>
-    </section>
+        <!-- Responsive 2-Column Grid of Modern Project Cards -->
+        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
+          <!-- Project 1: Fake News Detection System (Final Year Project) -->
+          <article data-categories="nlp django" class="project-item exec-card exec-card-hover rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+            <div class="space-y-4">
+              <!-- Badges Row -->
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-md pill-accent font-mono text-[11px] font-semibold uppercase tracking-wide">
+                    FINAL YEAR PROJECT
+                  </span>
+                  <span class="px-2.5 py-0.5 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary uppercase">
+                    NLP &amp; DJANGO
+                  </span>
+                </div>
+              </div>
+
+              <!-- Title & Description -->
+              <div class="space-y-2">
+                <h3 class="text-lg sm:text-xl font-bold text-ink tracking-tight">
+                  Fake News Detection System
+                </h3>
+                <p class="text-sm text-secondary leading-relaxed">
+                  Built an end-to-end text classification system that labels news content as real or fake using text preprocessing, TF-IDF vectorization, and Logistic Regression. Evaluated and serialized the model, integrating it into a Django web application with a custom frontend for live predictions.
+                </p>
+              </div>
+
+              <!-- Tech Stack Pills -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Python</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">NLP</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">TF-IDF</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Logistic Regression</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Django</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">HTML/CSS/JS</span>
+              </div>
+            </div>
+
+            <!-- Card Footer Actions -->
+            <div class="pt-5 mt-6 border-t border-hairline flex items-center justify-between gap-3">
+              <a
+                href="https://github.com/itsSana-Noor"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-secondary hover:text-ink transition-colors"
+              >
+                <span>GitHub</span>
+                <span>↗</span>
+              </a>
+              <button
+                type="button"
+                data-project="fake-news"
+                class="inspect-pipeline-btn inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-subtle hover:bg-accent text-ink hover:text-white border border-hairline hover:border-accent text-xs font-semibold transition-all"
+              >
+                <span>Inspect Pipeline</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </article>
+
+          <!-- Project 2: TweetBoost — Virality Predictor -->
+          <article data-categories="nlp ml" class="project-item exec-card exec-card-hover rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+            <div class="space-y-4">
+              <!-- Badges Row -->
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md pill-live font-mono text-[11px] font-semibold uppercase tracking-wide">
+                    <span class="w-1.5 h-1.5 rounded-full bg-live animate-pulse"></span>
+                    LIVE DEPLOYMENT
+                  </span>
+                  <span class="px-2.5 py-0.5 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary uppercase">
+                    NLP &amp; STREAMLIT
+                  </span>
+                </div>
+              </div>
+
+              <!-- Title & Description -->
+              <div class="space-y-2">
+                <h3 class="text-lg sm:text-xl font-bold text-ink tracking-tight">
+                  TweetBoost — Virality Predictor
+                </h3>
+                <p class="text-sm text-secondary leading-relaxed">
+                  Live interactive ML web application that evaluates tweet copy, linguistic patterns, and structural features to predict engagement and virality potential in real time.
+                </p>
+              </div>
+
+              <!-- Tech Stack Pills -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Python</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">NLP</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Scikit-learn</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Pandas</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Streamlit</span>
+              </div>
+            </div>
+
+            <!-- Card Footer Actions -->
+            <div class="pt-5 mt-6 border-t border-hairline flex items-center justify-between gap-3">
+              <div class="flex items-center gap-4">
+                <a
+                  href="https://tweetboost.streamlit.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1 font-mono text-xs font-semibold text-live hover:underline"
+                >
+                  <span>Live App ↗</span>
+                </a>
+                <a
+                  href="https://github.com/itsSana-Noor"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1 font-mono text-xs font-medium text-secondary hover:text-ink transition-colors"
+                >
+                  <span>GitHub ↗</span>
+                </a>
+              </div>
+              <button
+                type="button"
+                data-project="tweetboost"
+                class="inspect-pipeline-btn inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-subtle hover:bg-accent text-ink hover:text-white border border-hairline hover:border-accent text-xs font-semibold transition-all"
+              >
+                <span>Inspect Pipeline</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </article>
+
+          <!-- Project 3: Credit Scoring System -->
+          <article data-categories="ml" class="project-item exec-card exec-card-hover rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+            <div class="space-y-4">
+              <!-- Badges Row -->
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-md pill-accent font-mono text-[11px] font-semibold uppercase tracking-wide">
+                  FINTECH ML
+                </span>
+                <span class="px-2.5 py-0.5 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary uppercase">
+                  CODEALPHA
+                </span>
+              </div>
+
+              <!-- Title & Description -->
+              <div class="space-y-2">
+                <h3 class="text-lg sm:text-xl font-bold text-ink tracking-tight">
+                  Credit Scoring System
+                </h3>
+                <p class="text-sm text-secondary leading-relaxed">
+                  Developed a supervised creditworthiness classification workflow during the CodeAlpha internship, engineering applicant financial features and evaluating classification models for risk assessment.
+                </p>
+              </div>
+
+              <!-- Tech Stack Pills -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Python</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Scikit-learn</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Pandas</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">NumPy</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Feature Engineering</span>
+              </div>
+            </div>
+
+            <!-- Card Footer Actions -->
+            <div class="pt-5 mt-6 border-t border-hairline flex items-center justify-between gap-3">
+              <a
+                href="https://github.com/itsSana-Noor"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-secondary hover:text-ink transition-colors"
+              >
+                <span>GitHub</span>
+                <span>↗</span>
+              </a>
+              <button
+                type="button"
+                data-project="credit-score"
+                class="inspect-pipeline-btn inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-subtle hover:bg-accent text-ink hover:text-white border border-hairline hover:border-accent text-xs font-semibold transition-all"
+              >
+                <span>Inspect Pipeline</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </article>
+
+          <!-- Project 4: Loan Prediction System -->
+          <article data-categories="ml" class="project-item exec-card exec-card-hover rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+            <div class="space-y-4">
+              <!-- Badges Row -->
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-md pill-accent font-mono text-[11px] font-semibold uppercase tracking-wide">
+                  PREDICTIVE ML
+                </span>
+                <span class="px-2.5 py-0.5 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary uppercase">
+                  CODEALPHA
+                </span>
+              </div>
+
+              <!-- Title & Description -->
+              <div class="space-y-2">
+                <h3 class="text-lg sm:text-xl font-bold text-ink tracking-tight">
+                  Loan Prediction System
+                </h3>
+                <p class="text-sm text-secondary leading-relaxed">
+                  Automated loan approval prediction pipeline featuring missing-data imputation, categorical feature encoding, Logistic Regression modeling, and cross-validated performance metrics.
+                </p>
+              </div>
+
+              <!-- Tech Stack Pills -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Python</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Scikit-learn</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Logistic Regression</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Data Preprocessing</span>
+              </div>
+            </div>
+
+            <!-- Card Footer Actions -->
+            <div class="pt-5 mt-6 border-t border-hairline flex items-center justify-between gap-3">
+              <a
+                href="https://github.com/itsSana-Noor"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-secondary hover:text-ink transition-colors"
+              >
+                <span>GitHub</span>
+                <span>↗</span>
+              </a>
+              <button
+                type="button"
+                data-project="loan-prediction"
+                class="inspect-pipeline-btn inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-subtle hover:bg-accent text-ink hover:text-white border border-hairline hover:border-accent text-xs font-semibold transition-all"
+              >
+                <span>Inspect Pipeline</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </article>
+
+          <!-- Project 5: Movie Recommendation System -->
+          <article data-categories="nlp ml" class="project-item exec-card exec-card-hover rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+            <div class="space-y-4">
+              <!-- Badges Row -->
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-md pill-accent font-mono text-[11px] font-semibold uppercase tracking-wide">
+                  RECOMMENDER ENGINE
+                </span>
+                <span class="px-2.5 py-0.5 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary uppercase">
+                  NLP &amp; SIMILARITY
+                </span>
+              </div>
+
+              <!-- Title & Description -->
+              <div class="space-y-2">
+                <h3 class="text-lg sm:text-xl font-bold text-ink tracking-tight">
+                  Movie Recommendation System
+                </h3>
+                <p class="text-sm text-secondary leading-relaxed">
+                  Content-based recommendation system leveraging metadata feature extraction, TF-IDF vectorization, and cosine similarity matrices to generate personalized movie recommendations.
+                </p>
+              </div>
+
+              <!-- Tech Stack Pills -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Python</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Pandas</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">NumPy</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">TF-IDF</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Cosine Similarity</span>
+              </div>
+            </div>
+
+            <!-- Card Footer Actions -->
+            <div class="pt-5 mt-6 border-t border-hairline flex items-center justify-between gap-3">
+              <a
+                href="https://github.com/itsSana-Noor"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-secondary hover:text-ink transition-colors"
+              >
+                <span>GitHub</span>
+                <span>↗</span>
+              </a>
+              <button
+                type="button"
+                data-project="movie-recsys"
+                class="inspect-pipeline-btn inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-subtle hover:bg-accent text-ink hover:text-white border border-hairline hover:border-accent text-xs font-semibold transition-all"
+              >
+                <span>Inspect Pipeline</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </article>
+
+          <!-- Project 6: Diabetes Prediction System -->
+          <article data-categories="ml" class="project-item exec-card exec-card-hover rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+            <div class="space-y-4">
+              <!-- Badges Row -->
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-md pill-accent font-mono text-[11px] font-semibold uppercase tracking-wide">
+                  HEALTHCARE ML
+                </span>
+                <span class="px-2.5 py-0.5 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary uppercase">
+                  CODEALPHA
+                </span>
+              </div>
+
+              <!-- Title & Description -->
+              <div class="space-y-2">
+                <h3 class="text-lg sm:text-xl font-bold text-ink tracking-tight">
+                  Diabetes Prediction System
+                </h3>
+                <p class="text-sm text-secondary leading-relaxed">
+                  Clinical risk classification pipeline trained on standardized diagnostic indicators with systematic feature scaling, model evaluation, and serialized inference.
+                </p>
+              </div>
+
+              <!-- Tech Stack Pills -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Python</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Scikit-learn</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Classification</span>
+                <span class="px-2.5 py-1 rounded-md bg-subtle border border-hairline font-mono text-[11px] font-medium text-secondary">Model Evaluation</span>
+              </div>
+            </div>
+
+            <!-- Card Footer Actions -->
+            <div class="pt-5 mt-6 border-t border-hairline flex items-center justify-between gap-3">
+              <a
+                href="https://github.com/itsSana-Noor"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-secondary hover:text-ink transition-colors"
+              >
+                <span>GitHub</span>
+                <span>↗</span>
+              </a>
+              <button
+                type="button"
+                data-project="diabetes-prediction"
+                class="inspect-pipeline-btn inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-subtle hover:bg-accent text-ink hover:text-white border border-hairline hover:border-accent text-xs font-semibold transition-all"
+              >
+                <span>Inspect Pipeline</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           4. EXPERIENCE & EDUCATION SECTION (#experience, #education)
+           ===================================================================== -->
+      <section id="experience" class="scroll-mt-24 space-y-8">
+        <div class="space-y-2 pb-6 border-b border-hairline">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+            02 // Experience &amp; Academic Credentials
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-ink">
+            Industry Experience &amp; Education
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+          <!-- Left Column (7 cols): Experience Vertical Timeline -->
+          <div class="lg:col-span-7 exec-card rounded-2xl p-6 sm:p-8 space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-hairline">
+              <h3 class="text-lg font-bold text-ink tracking-tight">Experience</h3>
+              <span class="font-mono text-xs font-medium text-muted">3 Internships • 2026</span>
+            </div>
+
+            <div class="relative pl-6 border-l border-hairline space-y-8">
+
+              <!-- Role 1: Clockwise Capital -->
+              <div class="relative">
+                <span class="absolute -left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-live ring-4 ring-canvas"></span>
+                <div class="space-y-2">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span class="font-mono text-xs font-medium text-secondary">2026 – Present</span>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full pill-live font-mono text-[11px] font-semibold tracking-wide">
+                      <span class="w-1.5 h-1.5 rounded-full bg-live"></span>
+                      CURRENT
+                    </span>
+                  </div>
+                  <div>
+                    <h4 class="text-base sm:text-lg font-bold text-ink">
+                      Machine Learning Intern — Clockwise Capital
+                    </h4>
+                  </div>
+                  <p class="text-sm text-secondary leading-relaxed">
+                    Collaborating across two cross-functional teams to develop and integrate a unified project within a live FinTech and investment analytics environment.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Role 2: Global Institute of Science and Technology -->
+              <div class="relative">
+                <span class="absolute -left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-accent ring-4 ring-canvas"></span>
+                <div class="space-y-2">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span class="font-mono text-xs font-medium text-secondary">2026</span>
+                  </div>
+                  <div>
+                    <h4 class="text-base sm:text-lg font-bold text-ink">
+                      Machine Learning Intern — Global Institute of Science and Technology
+                    </h4>
+                  </div>
+                  <p class="text-sm text-secondary leading-relaxed">
+                    Used Python and Scikit-learn for practical machine-learning and data-science projects. Applied data preprocessing, feature engineering, model training, evaluation, and performance analysis.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Role 3: CodeAlpha -->
+              <div class="relative">
+                <span class="absolute -left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted ring-4 ring-canvas"></span>
+                <div class="space-y-2">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span class="font-mono text-xs font-medium text-secondary">2026</span>
+                  </div>
+                  <div>
+                    <h4 class="text-base sm:text-lg font-bold text-ink">
+                      Machine Learning Intern — CodeAlpha
+                    </h4>
+                  </div>
+                  <p class="text-sm text-secondary leading-relaxed">
+                    Developed prediction and classification projects using Python and machine-learning workflows. Completed Loan Prediction, Diabetes Prediction, and Credit Scoring systems.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right Column (5 cols): Education & Certifications -->
+          <div id="education" class="lg:col-span-5 scroll-mt-24 space-y-6">
+
+            <!-- Education Card -->
+            <div class="exec-card rounded-2xl p-6 sm:p-7 space-y-5">
+              <div class="flex items-center justify-between pb-4 border-b border-hairline">
+                <span class="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+                  Education
+                </span>
+                <span class="font-mono text-xs font-medium text-secondary">
+                  2023 – 2027 (In Progress)
+                </span>
+              </div>
+
+              <div class="space-y-1.5">
+                <h3 class="text-lg font-bold text-ink leading-snug">
+                  Bachelor of Science in Computer Science (BSCS)
+                </h3>
+                <p class="text-sm font-medium text-secondary">
+                  Virtual University of Pakistan
+                </p>
+              </div>
+
+              <!-- Highlighted CGPA Badge -->
+              <div class="p-4 rounded-xl bg-subtle border border-hairline flex items-center justify-between gap-3">
+                <span class="font-mono text-xs font-medium text-secondary uppercase tracking-wide">
+                  Academic Standing
+                </span>
+                <span class="px-3 py-1 rounded-lg pill-accent font-mono text-xs font-semibold">
+                  CGPA: 3.48 / 4.00
+                </span>
+              </div>
+            </div>
+
+            <!-- Certifications Card -->
+            <div class="exec-card rounded-2xl p-6 sm:p-7 space-y-4">
+              <div class="flex items-center justify-between pb-3.5 border-b border-hairline">
+                <h3 class="text-base font-bold text-ink">Certifications</h3>
+                <span class="font-mono text-[11px] font-medium text-tealAccent">Verified</span>
+              </div>
+
+              <ul class="space-y-2.5">
+                <li class="flex items-center justify-between gap-3 p-3 rounded-xl bg-subtle/75 border border-hairline">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                    <span class="text-sm font-semibold text-ink">Python for Everybody</span>
+                  </div>
+                  <span class="font-mono text-[11px] text-muted">Python</span>
+                </li>
+
+                <li class="flex items-center justify-between gap-3 p-3 rounded-xl bg-subtle/75 border border-hairline">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-tealAccent"></span>
+                    <span class="text-sm font-semibold text-ink">Freelancing Certificate</span>
+                  </div>
+                  <span class="font-mono text-[11px] text-muted">Delivery</span>
+                </li>
+
+                <li class="flex items-center justify-between gap-3 p-3 rounded-xl bg-subtle/75 border border-hairline">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                    <span class="text-sm font-semibold text-ink">Machine Learning for All</span>
+                  </div>
+                  <span class="font-mono text-[11px] text-muted">AI / ML</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           5. TECHNICAL SKILLS MATRIX (#skills)
+           ===================================================================== -->
+      <section id="skills" class="scroll-mt-24 space-y-8">
+        <div class="space-y-2 pb-6 border-b border-hairline">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+            03 // Core Engineering Capabilities
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-ink">
+            Technical Skills Matrix
+          </h2>
+        </div>
+
+        <!-- 4 Structured Modern Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- Skill Card 1: AI & Machine Learning -->
+          <div class="exec-card exec-card-hover rounded-2xl p-6 sm:p-7 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base sm:text-lg font-bold text-ink">AI &amp; Machine Learning</h3>
+              <span class="px-2.5 py-0.5 rounded-md pill-accent font-mono text-[11px] font-semibold">01 / ML</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Scikit-learn</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Logistic Regression</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Classification</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Prediction Systems</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Model Evaluation</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Model Saving &amp; Deployment</span>
+            </div>
+          </div>
+
+          <!-- Skill Card 2: Natural Language Processing -->
+          <div class="exec-card exec-card-hover rounded-2xl p-6 sm:p-7 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base sm:text-lg font-bold text-ink">Natural Language Processing</h3>
+              <span class="px-2.5 py-0.5 rounded-md pill-accent font-mono text-[11px] font-semibold">02 / NLP</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Text Preprocessing</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">TF-IDF</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Feature Extraction</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Text Classification</span>
+            </div>
+          </div>
+
+          <!-- Skill Card 3: APIs & Backend Development -->
+          <div class="exec-card exec-card-hover rounded-2xl p-6 sm:p-7 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base sm:text-lg font-bold text-ink">APIs &amp; Backend Development</h3>
+              <span class="px-2.5 py-0.5 rounded-md pill-accent font-mono text-[11px] font-semibold">03 / API</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">REST APIs (Building &amp; Consuming)</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Django</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Django REST Framework (DRF)</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">SimpleJWT</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">HTML</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">CSS</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">JavaScript</span>
+            </div>
+          </div>
+
+          <!-- Skill Card 4: Data Science & Tools -->
+          <div class="exec-card exec-card-hover rounded-2xl p-6 sm:p-7 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base sm:text-lg font-bold text-ink">Data Science &amp; Tools</h3>
+              <span class="px-2.5 py-0.5 rounded-md pill-accent font-mono text-[11px] font-semibold">04 / DATA</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Python</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Pandas</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">NumPy</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Data Preprocessing</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Feature Engineering</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Git / GitHub</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">VS Code</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Jupyter Notebook</span>
+              <span class="px-3 py-1.5 rounded-lg bg-subtle border border-hairline font-mono text-xs font-medium text-ink">Streamlit</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           6. CONTACT SECTION (#contact — WEB3FORMS PRE-CONFIGURED)
+           ===================================================================== -->
+      <section id="contact" class="scroll-mt-24 space-y-8">
+        <div class="space-y-2 pb-6 border-b border-hairline">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+            04 // Direct Inquiry &amp; Collaboration
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-ink">
+            Initiate a Conversation
+          </h2>
+        </div>
+
+        <div class="exec-card rounded-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+
+          <!-- Left Column (5 cols): Direct Professional Links -->
+          <div class="lg:col-span-5 bg-subtle/60 p-6 sm:p-8 lg:p-9 border-b lg:border-b-0 lg:border-r border-hairline flex flex-col justify-between space-y-8">
+            <div class="space-y-4">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full pill-live font-mono text-[11px] font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-live"></span>
+                <span>Available for ML &amp; Backend Engineering</span>
+              </div>
+
+              <h3 class="text-xl sm:text-2xl font-bold text-ink tracking-tight leading-snug">
+                Let’s discuss ML pipelines, NLP systems, or Django REST APIs.
+              </h3>
+
+              <p class="text-sm text-secondary leading-relaxed">
+                Reach out directly via LinkedIn, inspect open-source repositories on GitHub, explore the live TweetBoost deployment, or submit a message through the form.
+              </p>
+            </div>
+
+            <!-- Direct Professional Link Cards -->
+            <div class="space-y-2.5">
+              <p class="font-mono text-[11px] font-semibold uppercase tracking-wider text-muted mb-3">
+                Verified Channels
+              </p>
+
+              <!-- LinkedIn -->
+              <a
+                href="https://www.linkedin.com/in/sana-noor-449b7a261/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group flex items-center justify-between p-3.5 rounded-xl bg-surface hover:border-accent/50 border border-hairline transition-all"
+              >
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg bg-subtle border border-hairline flex items-center justify-center text-accent">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <span class="block text-sm font-semibold text-ink">LinkedIn</span>
+                    <span class="block font-mono text-[11px] text-secondary">Sana Noor</span>
+                  </div>
+                </div>
+                <span class="font-mono text-xs text-muted group-hover:text-accent transition-colors">↗</span>
+              </a>
+
+              <!-- GitHub -->
+              <a
+                href="https://github.com/itsSana-Noor"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group flex items-center justify-between p-3.5 rounded-xl bg-surface hover:border-accent/50 border border-hairline transition-all"
+              >
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg bg-subtle border border-hairline flex items-center justify-center text-ink">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                  <div>
+                    <span class="block text-sm font-semibold text-ink">GitHub</span>
+                    <span class="block font-mono text-[11px] text-secondary">@itsSana-Noor</span>
+                  </div>
+                </div>
+                <span class="font-mono text-xs text-muted group-hover:text-accent transition-colors">↗</span>
+              </a>
+
+              <!-- Live TweetBoost App -->
+              <a
+                href="https://tweetboost.streamlit.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group flex items-center justify-between p-3.5 rounded-xl bg-surface hover:border-live/50 border border-hairline transition-all"
+              >
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg pill-live flex items-center justify-center">
+                    <span class="w-2 h-2 rounded-full bg-live"></span>
+                  </span>
+                  <div>
+                    <span class="block text-sm font-semibold text-ink">Live TweetBoost App</span>
+                    <span class="block font-mono text-[11px] text-secondary">tweetboost.streamlit.app</span>
+                  </div>
+                </div>
+                <span class="font-mono text-xs text-live group-hover:translate-x-0.5 transition-transform">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column (7 cols): Web3Forms Contact Form -->
+          <div class="lg:col-span-7 p-6 sm:p-8 lg:p-9 bg-surface">
+            <form
+              id="web3forms-contact-form"
+              action="https://api.web3forms.com/submit"
+              method="POST"
+              class="space-y-4"
+            >
+              <!-- Synced Web3Forms Access Key & Metadata -->
+              <input type="hidden" name="access_key" id="web3forms-key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+              <input type="hidden" name="from_name" value="Sana Noor Portfolio" />
+              <!-- Honeypot Spam Protection -->
+              <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
+
+              <!-- Name & Email Row -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="contact-name" class="block font-mono text-xs font-medium text-secondary mb-1.5">
+                    Name <span class="text-accent">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="contact-name"
+                    name="name"
+                    required
+                    placeholder="Alex Morgan"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-canvas border border-hairline text-ink placeholder:text-muted text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label for="contact-email" class="block font-mono text-xs font-medium text-secondary mb-1.5">
+                    Email <span class="text-accent">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="contact-email"
+                    name="email"
+                    required
+                    placeholder="alex@company.com"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-canvas border border-hairline text-ink placeholder:text-muted text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
+                  />
+                </div>
+              </div>
+
+              <!-- Subject Field -->
+              <div>
+                <label for="contact-subject" class="block font-mono text-xs font-medium text-secondary mb-1.5">
+                  Subject <span class="text-accent">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="contact-subject"
+                  name="subject"
+                  required
+                  placeholder="ML Pipeline Engineering / Django REST API Collaboration"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-canvas border border-hairline text-ink placeholder:text-muted text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
+                />
+              </div>
+
+              <!-- Message Field -->
+              <div>
+                <label for="contact-message" class="block font-mono text-xs font-medium text-secondary mb-1.5">
+                  Message <span class="text-accent">*</span>
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  rows="4"
+                  required
+                  placeholder="Share project scope, engineering requirements, or role details..."
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-canvas border border-hairline text-ink placeholder:text-muted text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all resize-y"
+                ></textarea>
+              </div>
+
+              <!-- Dynamic Form Feedback Banner -->
+              <div
+                id="form-feedback-banner"
+                role="status"
+                aria-live="polite"
+                class="hidden rounded-xl border p-4 text-xs sm:text-sm leading-relaxed"
+              ></div>
+
+              <!-- Submit Button with Loading State -->
+              <div class="pt-1">
+                <button
+                  type="submit"
+                  id="contact-submit-btn"
+                  class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-accent hover:bg-accentHover text-white font-semibold text-sm shadow-sm disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+                >
+                  <svg id="submit-spinner" class="hidden animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <span id="submit-btn-label">Send Message</span>
+                  <span id="submit-btn-arrow" aria-hidden="true">→</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
   </main>
 
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="max-w-6xl mx-auto px-3 sm:px-6 pb-10">
-    <div class="bg-[#46423D] text-white rounded-3xl px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-2.5">
-        <span class="w-7 h-7 rounded-full bg-[#1D54E8] text-white font-mono font-bold text-xs flex items-center justify-center">SN</span>
-        <span class="font-bold text-sm">Sana Noor</span>
-        <span class="text-xs text-[#EAEAEA]/80">&bull; ML Engineer &amp; Python/Django Developer</span>
-      </div>
+  <!-- =====================================================================
+       7. MINIMALIST MODERN FOOTER
+       ===================================================================== -->
+  <footer class="border-t border-hairline bg-surface">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="font-mono text-xs text-secondary">
+        © 2026 Sana Noor
+      </p>
 
-      <div class="flex flex-wrap items-center gap-5 font-mono text-xs font-semibold text-[#DCE6FF]">
-        <a href="https://tweetboost.streamlit.app/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">TweetBoost ↗</a>
-        <a href="https://github.com/itsSana-Noor" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">GitHub ↗</a>
-        <a href="https://www.linkedin.com/in/sana-noor-449b7a261/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">LinkedIn ↗</a>
+      <div class="flex flex-wrap items-center gap-5 font-mono text-xs text-secondary">
+        <a href="https://github.com/itsSana-Noor" target="_blank" rel="noopener noreferrer" class="hover:text-ink transition-colors">
+          GitHub ↗
+        </a>
+        <a href="https://www.linkedin.com/in/sana-noor-449b7a261/" target="_blank" rel="noopener noreferrer" class="hover:text-ink transition-colors">
+          LinkedIn ↗
+        </a>
+        <a href="https://tweetboost.streamlit.app/" target="_blank" rel="noopener noreferrer" class="hover:text-live transition-colors">
+          TweetBoost ↗
+        </a>
+        <a
+          href="#top"
+          class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-subtle hover:bg-canvas border border-hairline text-ink transition-colors"
+        >
+          <span>Top</span>
+          <span>↑</span>
+        </a>
       </div>
     </div>
   </footer>
 
-  <!-- ==================== 5-STAGE PIPELINE ARCHITECTURE MODAL ==================== -->
+  <!-- =====================================================================
+       INTERACTIVE 5-STAGE ML / BACKEND ARCHITECTURE PIPELINE MODAL
+       ===================================================================== -->
   <div
-    id="pipelineModal"
-    class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-[#2B2926]/75 backdrop-blur-sm"
+    id="pipeline-modal"
     role="dialog"
     aria-modal="true"
-    aria-labelledby="modalTitle"
+    aria-labelledby="modal-project-title"
+    class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
   >
-    <div class="bg-white border border-[#46423D]/20 rounded-[2rem] max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl relative">
-      <!-- Close Button -->
-      <button
-        type="button"
-        onclick="closePipelineModal()"
-        aria-label="Close Pipeline Modal"
-        class="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#F7F6F3] hover:bg-[#1D54E8] text-[#46423D] hover:text-white flex items-center justify-center font-mono text-sm font-bold transition-colors"
-      >
-        ✕
-      </button>
+    <div class="animate-modal-in bg-surface border border-hairline w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden my-auto">
 
-      <div class="pr-10">
-        <span id="modalBadge" class="inline-block px-3.5 py-1 rounded-full bg-[#DCE6FF] text-[#1D54E8] font-mono text-xs font-bold mb-2">
-          5-STAGE PIPELINE
-        </span>
-        <h3 id="modalTitle" class="text-2xl sm:text-3xl font-black text-[#46423D]"></h3>
-        <p id="modalSummary" class="text-sm text-[#46423D]/80 mt-2 leading-relaxed"></p>
-      </div>
-
-      <!-- 5-Stage End-to-End Architecture Flow -->
-      <div class="mt-6">
-        <div class="font-mono text-xs font-bold uppercase tracking-wider text-[#46423D]/60 mb-3">
-          Data Ingestion &rarr; Preprocessing &rarr; Feature Engineering &rarr; Model Training &amp; Evaluation &rarr; Deployment
-        </div>
-        <div id="modalStagesContainer" class="space-y-2.5"></div>
-      </div>
-
-      <!-- Tech Stack -->
-      <div class="mt-6">
-        <div class="font-mono text-xs font-bold uppercase tracking-wider text-[#46423D]/60 mb-2">
-          Technologies Used
-        </div>
-        <div id="modalTags" class="flex flex-wrap gap-2"></div>
-      </div>
-
-      <!-- Modal Footer Actions -->
-      <div class="mt-7 pt-5 border-t border-[#46423D]/10 flex flex-wrap items-center justify-between gap-3">
-        <div class="flex flex-wrap gap-2.5">
-          <a
-            id="modalLiveBtn"
-            href="https://tweetboost.streamlit.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hidden px-5 py-2.5 rounded-2xl bg-[#1D54E8] hover:bg-[#1643BD] text-white font-mono text-xs font-bold transition-colors"
-          >
-            Open Live App ↗
-          </a>
-          <a
-            href="https://github.com/itsSana-Noor"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="px-5 py-2.5 rounded-2xl bg-[#F7F6F3] hover:bg-[#46423D] text-[#46423D] hover:text-white border border-[#46423D]/15 font-mono text-xs font-bold transition-colors"
-          >
-            View on GitHub ↗
-          </a>
+      <!-- Modal Top Header -->
+      <div class="px-6 py-5 border-b border-hairline flex items-start justify-between gap-4 bg-subtle/40">
+        <div class="space-y-1">
+          <span id="modal-project-badge" class="inline-block px-2.5 py-0.5 rounded-md pill-accent font-mono text-[11px] font-semibold uppercase tracking-wider">
+            5-Stage System Architecture
+          </span>
+          <h3 id="modal-project-title" class="text-lg sm:text-xl font-bold text-ink tracking-tight">
+            Project Pipeline
+          </h3>
+          <p id="modal-project-subtitle" class="text-xs sm:text-sm text-secondary">
+            End-to-End Machine Learning &amp; Application Architecture
+          </p>
         </div>
 
         <button
           type="button"
-          onclick="closePipelineModal()"
-          class="px-4 py-2 rounded-xl font-mono text-xs font-bold text-[#46423D]/70 hover:text-[#1D54E8]"
+          id="close-modal-btn"
+          aria-label="Close Pipeline Modal"
+          class="p-2 rounded-lg bg-surface border border-hairline text-secondary hover:text-ink hover:bg-subtle transition-colors shrink-0"
         >
-          Close (ESC)
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
       </div>
+
+      <!-- Interactive 5-Stage Selector Tabs -->
+      <div class="px-4 sm:px-6 py-3.5 bg-canvas border-b border-hairline">
+        <div id="modal-stage-tabs" class="grid grid-cols-5 gap-1.5 sm:gap-2">
+          <!-- Stage tabs injected via JS -->
+        </div>
+      </div>
+
+      <!-- Active Stage Detail & Full 5-Stage Flow -->
+      <div class="p-6 space-y-5">
+        <div id="modal-stage-detail" class="rounded-xl bg-subtle/65 border border-hairline p-5 space-y-3">
+          <!-- Active stage specification injected via JS -->
+        </div>
+
+        <div class="space-y-2">
+          <p class="font-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
+            End-to-End 5-Stage Engineering Flow
+          </p>
+          <div id="modal-stage-overview" class="grid grid-cols-1 sm:grid-cols-5 gap-2">
+            <!-- 5-stage connected overview cards injected via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 border-t border-hairline bg-subtle/40 flex flex-wrap items-center justify-between gap-3">
+        <div id="modal-tech-pills" class="flex flex-wrap gap-1.5"></div>
+        <div class="flex items-center gap-2.5 ml-auto">
+          <a
+            id="modal-action-link"
+            href="https://github.com/itsSana-Noor"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-4 py-2 rounded-lg bg-accent hover:bg-accentHover text-white text-xs font-semibold transition-colors"
+          >
+            View on GitHub ↗
+          </a>
+          <button
+            type="button"
+            id="modal-close-footer-btn"
+            class="px-4 py-2 rounded-lg bg-surface hover:bg-subtle text-ink border border-hairline text-xs font-semibold transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <!-- ==================== JAVASCRIPT: NAVIGATION, FILTERS, MODAL & FORM ==================== -->
+  <!-- =====================================================================
+       APPLICATION JAVASCRIPT (THEME TOGGLE, PIPELINE MODAL, FILTERS, WEB3FORMS)
+       ===================================================================== -->
   <script>
-    // 1. Mobile Navigation Drawer
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const menuOpenIcon = document.getElementById('menuOpenIcon');
-    const menuCloseIcon = document.getElementById('menuCloseIcon');
+    /**
+     * =========================================================================
+     * WEB3FORMS CONFIGURATION
+     * Replace "YOUR_WEB3FORMS_ACCESS_KEY" with your free key from web3forms.com.
+     * Automatically syncs to <input type="hidden" name="access_key" id="web3forms-key">.
+     * =========================================================================
+     */
+    const WEB3FORMS_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
 
-    mobileMenuBtn.addEventListener('click', () => {
-      const isHidden = mobileMenu.classList.contains('hidden');
-      mobileMenu.classList.toggle('hidden', !isHidden);
-      menuOpenIcon.classList.toggle('hidden', isHidden);
-      menuCloseIcon.classList.toggle('hidden', !isHidden);
-      mobileMenuBtn.setAttribute('aria-expanded', String(isHidden));
-    });
+    const hiddenAccessKeyInput = document.getElementById("web3forms-key");
+    if (hiddenAccessKeyInput) {
+      hiddenAccessKeyInput.value = WEB3FORMS_ACCESS_KEY;
+    }
 
-    document.querySelectorAll('.mobile-link').forEach((link) => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        menuOpenIcon.classList.remove('hidden');
-        menuCloseIcon.classList.add('hidden');
-        mobileMenuBtn.setAttribute('aria-expanded', 'false');
-      });
-    });
-
-    // 2. Active Pill Highlight on Navbar Click
-    const navPills = document.querySelectorAll('.nav-pill');
-    navPills.forEach((pill) => {
-      pill.addEventListener('click', () => {
-        navPills.forEach((p) => {
-          p.classList.remove('bg-[#DCE6FF]', 'text-[#1D54E8]');
-          p.classList.add('text-[#46423D]/80');
-        });
-        pill.classList.add('bg-[#DCE6FF]', 'text-[#1D54E8]');
-        pill.classList.remove('text-[#46423D]/80');
-      });
-    });
-
-    // 3. Project Category Filter Tabs
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const projectCards = document.querySelectorAll('.project-card');
-
-    filterButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const selected = btn.getAttribute('data-filter');
-
-        filterButtons.forEach((b) => {
-          b.classList.remove('active', 'bg-[#1D54E8]', 'text-white', 'shadow-sm');
-          b.classList.add('bg-[#F7F6F3]', 'text-[#46423D]', 'border', 'border-[#46423D]/15');
-        });
-
-        btn.classList.add('active', 'bg-[#1D54E8]', 'text-white', 'shadow-sm');
-        btn.classList.remove('bg-[#F7F6F3]', 'text-[#46423D]', 'border', 'border-[#46423D]/15');
-
-        projectCards.forEach((card) => {
-          const cats = (card.getAttribute('data-categories') || '').split(' ');
-          if (selected === 'all' || cats.includes(selected)) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
+    /**
+     * =========================================================================
+     * 5-STAGE ENGINEERING PIPELINE SPECIFICATIONS FOR ALL 6 PROJECTS
+     * =========================================================================
+     */
+    const PROJECT_PIPELINES = {
+      "fake-news": {
+        title: "Fake News Detection System (Final Year Project)",
+        subtitle: "NLP Text Classification & Django Full-Stack Inference Architecture",
+        badge: "FINAL YEAR PROJECT • NLP & DJANGO",
+        actionLabel: "View on GitHub ↗",
+        actionUrl: "https://github.com/itsSana-Noor",
+        tech: ["Python", "NLP", "TF-IDF", "Logistic Regression", "Django", "HTML/CSS/JS"],
+        stages: [
+          {
+            num: "01",
+            label: "01. Data Ingestion & Validation",
+            short: "Data Ingestion",
+            description: "Ingested labeled real and fabricated news datasets, validating text completeness, deduplicating records, and balancing class distributions across training splits.",
+            spec: "Schema: { headline, body_text, label ∈ [0: Fake, 1: Real] }"
+          },
+          {
+            num: "02",
+            label: "02. Preprocessing & Feature Engineering",
+            short: "TF-IDF & NLP",
+            description: "Executed lowercasing, regex punctuation/URL sanitization, stopword filtering, and stemming prior to TF-IDF n-gram vectorization.",
+            spec: "Vectorizer: TfidfVectorizer(max_features=5000, ngram_range=(1, 2))"
+          },
+          {
+            num: "03",
+            label: "03. Model Training & Evaluation",
+            short: "Train & Evaluate",
+            description: "Trained a regularized Logistic Regression classifier on stratified splits and benchmarked accuracy, precision, recall, F1-score, and confusion matrices.",
+            spec: "Estimator: LogisticRegression(C=1.0, solver='liblinear')"
+          },
+          {
+            num: "04",
+            label: "04. Model Serialization & Persistence",
+            short: "Serialization",
+            description: "Serialized both the fitted TF-IDF vocabulary transformer and trained model weights to guarantee deterministic feature alignment during inference.",
+            spec: "Artifacts: tfidf_vectorizer.pkl + fake_news_classifier.pkl"
+          },
+          {
+            num: "05",
+            label: "05. Application & API Deployment",
+            short: "Django Web App",
+            description: "Integrated serialized artifacts into a Django web application with a custom frontend interface for low-latency live news authenticity predictions.",
+            spec: "Runtime: Django Backend + Custom HTML/CSS/JS Frontend"
           }
-        });
-      });
-    });
-
-    // 4. 5-Stage Pipeline Architecture Modal Data & Handlers
-    const PIPELINE_ARCHITECTURES = {
-      fakenews: {
-        badge: 'FINAL YEAR PROJECT • NLP & DJANGO FULL-STACK',
-        title: 'Fake News Detection System',
-        summary: 'End-to-end NLP text classification pipeline integrated into a full-stack Django web application to classify news articles as Real or Fake in real time.',
-        stages: [
-          { name: '01. Data Ingestion', desc: 'Loaded labeled real and fake news datasets using Pandas for structured text inspection and class-balance verification.' },
-          { name: '02. Preprocessing', desc: 'Applied lowercasing, punctuation/HTML stripping, stopword removal, and token normalization.' },
-          { name: '03. Feature Engineering', desc: 'Transformed cleaned corpus into weighted n-gram TF-IDF sparse feature matrices.' },
-          { name: '04. Model Training & Evaluation', desc: 'Trained a Logistic Regression classifier, evaluated precision, recall, F1-score, and serialized the model & vectorizer.' },
-          { name: '05. Deployment', desc: 'Integrated saved artifacts into Django backend views connected to a custom-designed HTML/CSS/JS frontend.' },
-        ],
-        tags: ['Python', 'NLP', 'TF-IDF', 'Logistic Regression', 'Django', 'HTML/CSS/JS'],
-        liveUrl: '',
+        ]
       },
-      tweetboost: {
-        badge: 'LIVE DEPLOYED • NLP & STREAMLIT',
-        title: 'TweetBoost — Virality Predictor',
-        summary: 'Interactive machine learning web application predicting tweet virality and engagement likelihood before publishing.',
+      "tweetboost": {
+        title: "TweetBoost — Virality Predictor",
+        subtitle: "Real-Time Social Engagement NLP Scoring Deployed on Streamlit",
+        badge: "LIVE DEPLOYMENT • NLP & STREAMLIT",
+        actionLabel: "Launch TweetBoost ↗",
+        actionUrl: "https://tweetboost.streamlit.app/",
+        tech: ["Python", "NLP", "Scikit-learn", "Pandas", "Streamlit"],
         stages: [
-          { name: '01. Data Ingestion', desc: 'Ingested historical tweet engagement datasets containing text, metadata signals, and virality labels.' },
-          { name: '02. Preprocessing', desc: 'Normalized tweet text, handled mentions/URLs/emojis, and standardized input payloads.' },
-          { name: '03. Feature Engineering', desc: 'Extracted lexical statistics, hashtag density, character length cues, and NLP vector representations.' },
-          { name: '04. Model Training & Evaluation', desc: 'Trained and validated Scikit-learn classification models tuned for balanced precision and recall.' },
-          { name: '05. Deployment', desc: 'Packaged serialized inference pipeline and deployed live on Streamlit Cloud (tweetboost.streamlit.app).' },
-        ],
-        tags: ['Python', 'Streamlit', 'NLP Feature Extraction', 'Scikit-learn', 'ML Classification'],
-        liveUrl: 'https://tweetboost.streamlit.app/',
+          {
+            num: "01",
+            label: "01. Data Ingestion & Validation",
+            short: "Data Ingestion",
+            description: "Curated social post datasets with engagement telemetry (likes, retweets, replies, impressions) and validated text encoding integrity.",
+            spec: "Input: Tweet copy + historical engagement rate benchmarks"
+          },
+          {
+            num: "02",
+            label: "02. Preprocessing & Feature Engineering",
+            short: "NLP Features",
+            description: "Extracted lexical hooks, character/word length ratios, hashtag and mention counts, punctuation signals, and TF-IDF representations.",
+            spec: "Features: Linguistic TF-IDF vectors + structural engagement metrics"
+          },
+          {
+            num: "03",
+            label: "03. Model Training & Evaluation",
+            short: "Model Tuning",
+            description: "Trained and cross-validated supervised Scikit-learn models to score virality potential with calibrated probability outputs.",
+            spec: "Validation: Stratified K-Fold CV + Precision/ROC-AUC evaluation"
+          },
+          {
+            num: "04",
+            label: "04. Model Serialization & Persistence",
+            short: "Serialization",
+            description: "Packaged feature transformations and estimator weights into a single serialized Scikit-learn Pipeline artifact for zero-skew inference.",
+            spec: "Artifact: tweetboost_pipeline.joblib"
+          },
+          {
+            num: "05",
+            label: "05. Application & API Deployment",
+            short: "Streamlit Live",
+            description: "Deployed publicly at tweetboost.streamlit.app with cached resource initialization for instant real-time virality analysis.",
+            spec: "Endpoint: https://tweetboost.streamlit.app/"
+          }
+        ]
       },
-      loan: {
-        badge: 'CODEALPHA • FINTECH CLASSIFICATION',
-        title: 'Loan Prediction System',
-        summary: 'Supervised ML system automating loan eligibility decisions from applicant demographic and financial records.',
+      "credit-score": {
+        title: "Credit Scoring System",
+        subtitle: "Supervised FinTech Risk & Creditworthiness Classification Pipeline",
+        badge: "FINTECH ML • CODEALPHA",
+        actionLabel: "View on GitHub ↗",
+        actionUrl: "https://github.com/itsSana-Noor",
+        tech: ["Python", "Scikit-learn", "Pandas", "NumPy", "Feature Engineering"],
         stages: [
-          { name: '01. Data Ingestion', desc: 'Loaded applicant loan records (income, credit history, loan term, property area) via Pandas.' },
-          { name: '02. Preprocessing', desc: 'Imputed missing numeric/categorical values and handled extreme income/loan outliers.' },
-          { name: '03. Feature Engineering', desc: 'Encoded categorical variables, derived total household income and EMI ratios, and scaled features.' },
-          { name: '04. Model Training & Evaluation', desc: 'Trained Scikit-learn classifiers with stratified cross-validation, confusion matrix, and accuracy benchmarking.' },
-          { name: '05. Deployment', desc: 'Exported reusable prediction pipeline ready for REST API inference.' },
-        ],
-        tags: ['Python', 'Scikit-learn', 'Pandas', 'Classification', 'Feature Engineering'],
-        liveUrl: '',
+          {
+            num: "01",
+            label: "01. Data Ingestion & Validation",
+            short: "Data Ingestion",
+            description: "Ingested applicant financial profiles including credit history, outstanding debt, monthly income, and payment behavior records.",
+            spec: "Input: Tabular financial records validated via Pandas & NumPy"
+          },
+          {
+            num: "02",
+            label: "02. Preprocessing & Feature Engineering",
+            short: "Feature Eng.",
+            description: "Sanitized noisy numeric fields, imputed missing entries, scaled continuous variables, and engineered debt-to-income and utilization ratios.",
+            spec: "Pipeline: Imputation + StandardScaler + Financial Ratio Features"
+          },
+          {
+            num: "03",
+            label: "03. Model Training & Evaluation",
+            short: "Risk Evaluation",
+            description: "Trained supervised classification models and evaluated precision, recall, F1-score, and class separation across credit risk tiers.",
+            spec: "Metrics: Macro/Weighted F1-Score & Confusion Matrix analysis"
+          },
+          {
+            num: "04",
+            label: "04. Model Serialization & Persistence",
+            short: "Serialization",
+            description: "Persisted preprocessing transformers and trained risk classifier weights for reproducible scoring across new applicant batches.",
+            spec: "Artifact: credit_scoring_model.joblib"
+          },
+          {
+            num: "05",
+            label: "05. Application & API Deployment",
+            short: "Inference Layer",
+            description: "Structured modular inference functions returning predicted creditworthiness classifications and confidence scores for underwriting workflows.",
+            spec: "Output: { credit_tier, risk_confidence }"
+          }
+        ]
       },
-      credit: {
-        badge: 'CODEALPHA • CREDIT RISK MODELING',
-        title: 'Credit Scoring System',
-        summary: 'Risk classification pipeline assessing applicant creditworthiness and likelihood of credit default.',
+      "loan-prediction": {
+        title: "Loan Prediction System",
+        subtitle: "Automated Loan Eligibility & Binary Classification Workflow",
+        badge: "PREDICTIVE ML • CODEALPHA",
+        actionLabel: "View on GitHub ↗",
+        actionUrl: "https://github.com/itsSana-Noor",
+        tech: ["Python", "Scikit-learn", "Logistic Regression", "Data Preprocessing"],
         stages: [
-          { name: '01. Data Ingestion', desc: 'Aggregated multi-attribute financial history and repayment behavior datasets in Pandas.' },
-          { name: '02. Preprocessing', desc: 'Cleaned noisy financial entries, standardized schemas, and resolved class imbalance.' },
-          { name: '03. Feature Engineering', desc: 'Engineered credit utilization ratios, payment delay indicators, and normalized numeric features.' },
-          { name: '04. Model Training & Evaluation', desc: 'Trained supervised classification algorithms in Scikit-learn and evaluated ROC-AUC and F1 metrics.' },
-          { name: '05. Deployment', desc: 'Serialized scoring model and preprocessing transformer for deterministic batch or API scoring.' },
-        ],
-        tags: ['Python', 'Scikit-learn', 'Data Preprocessing', 'Risk Classification', 'Model Evaluation'],
-        liveUrl: '',
+          {
+            num: "01",
+            label: "01. Data Ingestion & Validation",
+            short: "Data Ingestion",
+            description: "Loaded structured loan application records covering applicant income, co-applicant income, loan term, credit history, and property area.",
+            spec: "Target: Binary Loan Approval Status (Approved / Rejected)"
+          },
+          {
+            num: "02",
+            label: "02. Preprocessing & Feature Engineering",
+            short: "Preprocessing",
+            description: "Applied statistical imputation for missing values, encoded categorical attributes, and normalized numerical distributions.",
+            spec: "Transform: Categorical Encoding + Missing-Data Imputation"
+          },
+          {
+            num: "03",
+            label: "03. Model Training & Evaluation",
+            short: "Cross-Validation",
+            description: "Trained Logistic Regression models using cross-validated splits to optimize classification accuracy and minimize default exposure.",
+            spec: "Model: LogisticRegression() + Cross-Validated Accuracy & F1"
+          },
+          {
+            num: "04",
+            label: "04. Model Serialization & Persistence",
+            short: "Serialization",
+            description: "Exported the fitted preprocessing pipeline and Logistic Regression estimator for consistent downstream inference.",
+            spec: "Artifact: loan_prediction_pipeline.pkl"
+          },
+          {
+            num: "05",
+            label: "05. Application & API Deployment",
+            short: "Decision Output",
+            description: "Packaged clean prediction interfaces capable of scoring single applications or batch underwriting tables.",
+            spec: "Output: { approved: bool, probability: float }"
+          }
+        ]
       },
-      movie: {
-        badge: 'NLP & RECOMMENDATION ENGINE',
-        title: 'Movie Recommendation System',
-        summary: 'Content-based recommendation engine ranking similar movies using NLP metadata vectorization and cosine similarity.',
+      "movie-recsys": {
+        title: "Movie Recommendation System",
+        subtitle: "Content-Based Vector Similarity & Top-N Ranking Engine",
+        badge: "RECOMMENDER ENGINE • NLP & SIMILARITY",
+        actionLabel: "View on GitHub ↗",
+        actionUrl: "https://github.com/itsSana-Noor",
+        tech: ["Python", "Pandas", "NumPy", "TF-IDF", "Cosine Similarity"],
         stages: [
-          { name: '01. Data Ingestion', desc: 'Merged movie metadata datasets (genres, keywords, cast, crew, overview) using Pandas.' },
-          { name: '02. Preprocessing', desc: 'Cleaned nested metadata fields, normalized entity names, and stemmed tokens.' },
-          { name: '03. Feature Engineering', desc: 'Combined descriptive attributes into unified text tags and vectorized them into high-dimensional matrices.' },
-          { name: '04. Model Training & Evaluation', desc: 'Computed pairwise cosine similarity scores across all movie vectors using NumPy and Scikit-learn.' },
-          { name: '05. Deployment', desc: 'Built a fast title-lookup engine returning top-N ranked recommendations.' },
-        ],
-        tags: ['Python', 'Pandas', 'NumPy', 'Content-Based Filtering', 'Cosine Similarity'],
-        liveUrl: '',
+          {
+            num: "01",
+            label: "01. Data Ingestion & Validation",
+            short: "Data Ingestion",
+            description: "Merged movie metadata and credits tables, validating title uniqueness and extracting genres, plot summaries, keywords, cast, and crew.",
+            spec: "Dataset: Unified catalog metadata corpus"
+          },
+          {
+            num: "02",
+            label: "02. Preprocessing & Feature Engineering",
+            short: "TF-IDF Vectors",
+            description: "Normalized multi-word identifiers, removed stopwords, and constructed weighted TF-IDF document vectors for every title.",
+            spec: "Matrix: Sparse TF-IDF feature matrix (N_titles × M_tokens)"
+          },
+          {
+            num: "03",
+            label: "03. Model Training & Evaluation",
+            short: "Similarity Matrix",
+            description: "Computed pairwise cosine similarity across all vectorized titles and verified semantic relevance across diverse genres.",
+            spec: "Kernel: cosine_similarity(tfidf_matrix, tfidf_matrix)"
+          },
+          {
+            num: "04",
+            label: "04. Model Serialization & Persistence",
+            short: "Matrix Export",
+            description: "Serialized indexed title mappings and precomputed similarity matrices for sub-millisecond retrieval.",
+            spec: "Artifacts: movie_index.pkl + similarity_matrix.pkl"
+          },
+          {
+            num: "05",
+            label: "05. Application & API Deployment",
+            short: "Top-N Ranking",
+            description: "Exposed a query function returning ranked Top-N personalized movie recommendations with similarity scores.",
+            spec: "Output: Ranked Top-N similar titles"
+          }
+        ]
       },
-      diabetes: {
-        badge: 'CODEALPHA • HEALTHCARE PREDICTIVE ML',
-        title: 'Diabetes Prediction System',
-        summary: 'Clinical risk prediction model classifying diabetes likelihood from diagnostic medical measurements.',
+      "diabetes-prediction": {
+        title: "Diabetes Prediction System",
+        subtitle: "Clinical Risk Classification & Diagnostic Screening Pipeline",
+        badge: "HEALTHCARE ML • CODEALPHA",
+        actionLabel: "View on GitHub ↗",
+        actionUrl: "https://github.com/itsSana-Noor",
+        tech: ["Python", "Scikit-learn", "Classification", "Model Evaluation"],
         stages: [
-          { name: '01. Data Ingestion', desc: 'Loaded clinical diagnostic records (glucose, BMI, insulin, blood pressure, age) with Pandas.' },
-          { name: '02. Preprocessing', desc: 'Replaced biologically invalid zero entries with median distributions and standardized features.' },
-          { name: '03. Feature Engineering', desc: 'Analyzed feature correlations and normalized diagnostic ranges for optimal gradient convergence.' },
-          { name: '04. Model Training & Evaluation', desc: 'Trained Logistic Regression and Scikit-learn classifiers, prioritizing clinical recall and ROC-AUC.' },
-          { name: '05. Deployment', desc: 'Saved trained model weights and scaler for rapid diagnostic screening.' },
-        ],
-        tags: ['Python', 'Scikit-learn', 'Logistic Regression', 'Healthcare Predictive Modeling'],
-        liveUrl: '',
-      },
+          {
+            num: "01",
+            label: "01. Data Ingestion & Validation",
+            short: "Data Ingestion",
+            description: "Ingested diagnostic clinical metrics including glucose levels, BMI, blood pressure, insulin, age, and pedigree indicators.",
+            spec: "Schema: 8 standardized diagnostic biomarkers + binary outcome"
+          },
+          {
+            num: "02",
+            label: "02. Preprocessing & Feature Engineering",
+            short: "Feature Scaling",
+            description: "Replaced invalid zero-value clinical readings with median distributions and standardized all features via Z-score normalization.",
+            spec: "Scaler: StandardScaler() fitted strictly on training folds"
+          },
+          {
+            num: "03",
+            label: "03. Model Training & Evaluation",
+            short: "Clinical Eval",
+            description: "Trained supervised classification models with rigorous evaluation of sensitivity (recall), precision, accuracy, and ROC-AUC.",
+            spec: "Evaluation: Recall-focused Classification Report & ROC-AUC"
+          },
+          {
+            num: "04",
+            label: "04. Model Serialization & Persistence",
+            short: "Serialization",
+            description: "Serialized both the feature scaler and trained classifier weights to preserve clinical calibration during inference.",
+            spec: "Artifact: diabetes_classifier_bundle.pkl"
+          },
+          {
+            num: "05",
+            label: "05. Application & API Deployment",
+            short: "Screening API",
+            description: "Built structured inference endpoints accepting patient diagnostic indicators and returning risk predictions.",
+            spec: "Output: { risk_detected: bool, probability: float }"
+          }
+        ]
+      }
     };
 
-    const pipelineModal = document.getElementById('pipelineModal');
-    const modalBadge = document.getElementById('modalBadge');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalSummary = document.getElementById('modalSummary');
-    const modalStagesContainer = document.getElementById('modalStagesContainer');
-    const modalTags = document.getElementById('modalTags');
-    const modalLiveBtn = document.getElementById('modalLiveBtn');
+    /**
+     * =========================================================================
+     * DOM INITIALIZATION & INTERACTIVE CONTROLS
+     * =========================================================================
+     */
+    document.addEventListener("DOMContentLoaded", () => {
+      // -----------------------------------------------------------------------
+      // 1. Instant Light / Dark Mode Toggle (Persisted in localStorage)
+      // -----------------------------------------------------------------------
+      const themeToggleBtn = document.getElementById("theme-toggle-btn");
+      const iconSun = document.getElementById("icon-sun");
+      const iconMoon = document.getElementById("icon-moon");
 
-    function openPipelineModal(key) {
-      const data = PIPELINE_ARCHITECTURES[key];
-      if (!data) return;
-
-      modalBadge.textContent = data.badge;
-      modalTitle.textContent = data.title;
-      modalSummary.textContent = data.summary;
-
-      modalStagesContainer.innerHTML = data.stages
-        .map(
-          (stage) => `
-          <div class="p-3.5 rounded-2xl bg-[#F7F6F3] border border-[#46423D]/15 flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-4">
-            <span class="font-mono text-xs font-extrabold text-[#1D54E8] sm:w-52 shrink-0">${stage.name}</span>
-            <span class="text-xs sm:text-sm text-[#46423D]/85 leading-relaxed">${stage.desc}</span>
-          </div>
-        `
-        )
-        .join('');
-
-      modalTags.innerHTML = data.tags
-        .map(
-          (tag) =>
-            `<span class="px-3 py-1 rounded-xl bg-[#DCE6FF] font-mono text-xs font-bold text-[#1D54E8]">${tag}</span>`
-        )
-        .join('');
-
-      if (data.liveUrl) {
-        modalLiveBtn.href = data.liveUrl;
-        modalLiveBtn.classList.remove('hidden');
-        modalLiveBtn.classList.add('inline-flex');
-      } else {
-        modalLiveBtn.classList.add('hidden');
-        modalLiveBtn.classList.remove('inline-flex');
+      function syncThemeIcons() {
+        const isDark = document.documentElement.classList.contains("dark");
+        if (iconSun && iconMoon) {
+          iconSun.classList.toggle("hidden", !isDark);
+          iconMoon.classList.toggle("hidden", isDark);
+        }
+        if (themeToggleBtn) {
+          themeToggleBtn.setAttribute(
+            "aria-label",
+            isDark ? "Switch to Light Mode" : "Switch to Dark Mode"
+          );
+        }
       }
 
-      pipelineModal.classList.remove('hidden');
-      pipelineModal.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    }
+      syncThemeIcons();
 
-    function closePipelineModal() {
-      pipelineModal.classList.add('hidden');
-      pipelineModal.classList.remove('flex');
-      document.body.style.overflow = '';
-    }
-
-    pipelineModal.addEventListener('click', (e) => {
-      if (e.target === pipelineModal) closePipelineModal();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !pipelineModal.classList.contains('hidden')) {
-        closePipelineModal();
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener("click", () => {
+          const isCurrentlyDark = document.documentElement.classList.contains("dark");
+          const nextTheme = isCurrentlyDark ? "light" : "dark";
+          document.documentElement.classList.toggle("dark", nextTheme === "dark");
+          try {
+            localStorage.setItem("sana-portfolio-theme", nextTheme);
+          } catch (e) {
+            // Ignore storage errors in private contexts
+          }
+          syncThemeIcons();
+        });
       }
-    });
 
-    // 5. Contact Form Validation & Inline Confirmation
-    const contactForm = document.getElementById('contactForm');
-    const formSuccessState = document.getElementById('formSuccessState');
+      // -----------------------------------------------------------------------
+      // 2. Mobile Navigation Drawer Toggle
+      // -----------------------------------------------------------------------
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenuDrawer = document.getElementById("mobile-menu-drawer");
+      const menuOpenIcon = document.getElementById("menu-open-icon");
+      const menuCloseIcon = document.getElementById("menu-close-icon");
 
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('contactName').value.trim();
-      const email = document.getElementById('contactEmail').value.trim();
-      const message = document.getElementById('contactMessage').value.trim();
+      if (mobileMenuBtn && mobileMenuDrawer) {
+        mobileMenuBtn.addEventListener("click", () => {
+          const willOpen = mobileMenuDrawer.classList.contains("hidden");
+          mobileMenuDrawer.classList.toggle("hidden", !willOpen);
+          mobileMenuBtn.setAttribute("aria-expanded", String(willOpen));
+          menuOpenIcon.classList.toggle("hidden", willOpen);
+          menuCloseIcon.classList.toggle("hidden", !willOpen);
+        });
 
-      const nameErr = document.getElementById('nameError');
-      const emailErr = document.getElementById('emailError');
-      const msgErr = document.getElementById('messageError');
+        document.querySelectorAll(".mobile-nav-item").forEach((item) => {
+          item.addEventListener("click", () => {
+            mobileMenuDrawer.classList.add("hidden");
+            mobileMenuBtn.setAttribute("aria-expanded", "false");
+            menuOpenIcon.classList.remove("hidden");
+            menuCloseIcon.classList.add("hidden");
+          });
+        });
+      }
 
-      let valid = true;
-      if (name.length < 2) { nameErr.classList.remove('hidden'); valid = false; } else { nameErr.classList.add('hidden'); }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { emailErr.classList.remove('hidden'); valid = false; } else { emailErr.classList.add('hidden'); }
-      if (message.length < 10) { msgErr.classList.remove('hidden'); valid = false; } else { msgErr.classList.add('hidden'); }
+      // -----------------------------------------------------------------------
+      // 3. Project Category Filter Tabs
+      // -----------------------------------------------------------------------
+      const filterTabs = document.querySelectorAll(".project-filter-tab");
+      const projectItems = document.querySelectorAll(".project-item");
 
-      if (!valid) return;
+      filterTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const filter = tab.getAttribute("data-filter");
 
-      document.getElementById('formSuccessText').textContent =
-        `Thank you, ${name}! Your message has been received and Sana Noor will respond to ${email} shortly.`;
-      contactForm.classList.add('hidden');
-      formSuccessState.classList.remove('hidden');
-    });
+          filterTabs.forEach((t) => {
+            t.classList.remove("active", "bg-surface", "text-ink", "shadow-sm", "border-hairline", "font-semibold");
+            t.classList.add("text-secondary", "border-transparent", "font-medium");
+          });
 
-    function resetContactForm() {
-      contactForm.reset();
-      formSuccessState.classList.add('hidden');
-      contactForm.classList.remove('hidden');
-    }
+          tab.classList.remove("text-secondary", "border-transparent", "font-medium");
+          tab.classList.add("active", "bg-surface", "text-ink", "shadow-sm", "border-hairline", "font-semibold");
 
-    // 6. Scroll Reveal Observer
-    const revealItems = document.querySelectorAll('.reveal');
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-              observer.unobserve(entry.target);
+          projectItems.forEach((card) => {
+            const categories = (card.getAttribute("data-categories") || "").split(" ");
+            if (filter === "all" || categories.includes(filter)) {
+              card.classList.remove("hidden");
+            } else {
+              card.classList.add("hidden");
             }
           });
-        },
-        { threshold: 0.1 }
-      );
-      revealItems.forEach((el) => observer.observe(el));
-    } else {
-      revealItems.forEach((el) => el.classList.add('visible'));
-    }
+        });
+      });
+
+      // -----------------------------------------------------------------------
+      // 4. Interactive 5-Stage Pipeline Modal
+      // -----------------------------------------------------------------------
+      const pipelineModal = document.getElementById("pipeline-modal");
+      const closeModalBtn = document.getElementById("close-modal-btn");
+      const modalCloseFooterBtn = document.getElementById("modal-close-footer-btn");
+      const modalProjectBadge = document.getElementById("modal-project-badge");
+      const modalProjectTitle = document.getElementById("modal-project-title");
+      const modalProjectSubtitle = document.getElementById("modal-project-subtitle");
+      const modalStageTabs = document.getElementById("modal-stage-tabs");
+      const modalStageDetail = document.getElementById("modal-stage-detail");
+      const modalStageOverview = document.getElementById("modal-stage-overview");
+      const modalTechPills = document.getElementById("modal-tech-pills");
+      const modalActionLink = document.getElementById("modal-action-link");
+
+      function renderPipelineStage(projectKey, stageIndex) {
+        const project = PROJECT_PIPELINES[projectKey];
+        if (!project) return;
+
+        const stage = project.stages[stageIndex];
+
+        // Render 5 interactive stage tabs
+        modalStageTabs.innerHTML = project.stages
+          .map((s, idx) => {
+            const isActive = idx === stageIndex;
+            return `
+              <button
+                type="button"
+                data-stage-index="${idx}"
+                class="modal-stage-btn px-2 py-2 rounded-lg border text-center transition-all ${
+                  isActive
+                    ? "bg-accent text-white border-accent font-semibold shadow-sm"
+                    : "bg-surface text-secondary hover:text-ink border-hairline font-medium"
+                }"
+              >
+                <span class="block font-mono text-[10px] opacity-85">${s.num}</span>
+                <span class="block text-[11px] truncate mt-0.5">${s.short}</span>
+              </button>
+            `;
+          })
+          .join("");
+
+        // Render active stage architectural detail
+        modalStageDetail.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md pill-accent font-mono text-[11px] font-semibold">
+              STAGE ${stage.num} OF 05
+            </span>
+            <span class="font-mono text-xs text-muted">${stage.short}</span>
+          </div>
+          <h4 class="text-base sm:text-lg font-bold text-ink tracking-tight">
+            ${stage.label}
+          </h4>
+          <p class="text-sm text-secondary leading-relaxed">
+            ${stage.description}
+          </p>
+          <div class="p-3 rounded-lg bg-surface border border-hairline font-mono text-xs text-ink overflow-x-auto">
+            <span class="text-accent font-semibold">Architecture Spec:</span> ${stage.spec}
+          </div>
+        `;
+
+        // Render 5-stage connected overview cards
+        modalStageOverview.innerHTML = project.stages
+          .map((s, idx) => {
+            const isCurrent = idx === stageIndex;
+            return `
+              <button
+                type="button"
+                data-stage-index="${idx}"
+                class="modal-overview-btn text-left p-2.5 rounded-xl border transition-all ${
+                  isCurrent
+                    ? "bg-surface border-accent ring-1 ring-accent/30"
+                    : "bg-canvas hover:bg-subtle border-hairline"
+                }"
+              >
+                <span class="block font-mono text-[10px] font-semibold ${isCurrent ? "text-accent" : "text-muted"}">
+                  ${s.num} →
+                </span>
+                <span class="block text-xs font-semibold text-ink mt-0.5 leading-snug">
+                  ${s.short}
+                </span>
+              </button>
+            `;
+          })
+          .join("");
+
+        modalStageTabs.querySelectorAll(".modal-stage-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            renderPipelineStage(projectKey, Number(btn.getAttribute("data-stage-index")));
+          });
+        });
+
+        modalStageOverview.querySelectorAll(".modal-overview-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            renderPipelineStage(projectKey, Number(btn.getAttribute("data-stage-index")));
+          });
+        });
+      }
+
+      function openPipelineModal(projectKey) {
+        const project = PROJECT_PIPELINES[projectKey];
+        if (!project) return;
+
+        modalProjectBadge.textContent = project.badge;
+        modalProjectTitle.textContent = project.title;
+        modalProjectSubtitle.textContent = project.subtitle;
+        modalActionLink.textContent = project.actionLabel;
+        modalActionLink.href = project.actionUrl;
+
+        modalTechPills.innerHTML = project.tech
+          .map(
+            (item) =>
+              `<span class="px-2 py-0.5 rounded-md bg-surface border border-hairline font-mono text-[11px] text-secondary">${item}</span>`
+          )
+          .join("");
+
+        renderPipelineStage(projectKey, 0);
+        pipelineModal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closePipelineModal() {
+        pipelineModal.classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+
+      document.querySelectorAll(".inspect-pipeline-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          openPipelineModal(btn.getAttribute("data-project"));
+        });
+      });
+
+      if (closeModalBtn) closeModalBtn.addEventListener("click", closePipelineModal);
+      if (modalCloseFooterBtn) modalCloseFooterBtn.addEventListener("click", closePipelineModal);
+
+      // Close modal on backdrop click
+      if (pipelineModal) {
+        pipelineModal.addEventListener("click", (event) => {
+          if (event.target === pipelineModal) {
+            closePipelineModal();
+          }
+        });
+      }
+
+      // Close modal on Escape key
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && pipelineModal && !pipelineModal.classList.contains("hidden")) {
+          closePipelineModal();
+        }
+      });
+
+      // -----------------------------------------------------------------------
+      // 5. Web3Forms Async Contact Submission Handler
+      // -----------------------------------------------------------------------
+      const contactForm = document.getElementById("web3forms-contact-form");
+      const submitBtn = document.getElementById("contact-submit-btn");
+      const submitSpinner = document.getElementById("submit-spinner");
+      const submitBtnLabel = document.getElementById("submit-btn-label");
+      const submitBtnArrow = document.getElementById("submit-btn-arrow");
+      const feedbackBanner = document.getElementById("form-feedback-banner");
+
+      function showFormFeedback(variant, html) {
+        feedbackBanner.classList.remove("hidden");
+        feedbackBanner.style.backgroundColor = "";
+        feedbackBanner.style.borderColor = "";
+        feedbackBanner.style.color = "";
+
+        if (variant === "success") {
+          feedbackBanner.style.backgroundColor = "var(--live-soft)";
+          feedbackBanner.style.borderColor = "var(--live-border)";
+          feedbackBanner.style.color = "var(--text-primary)";
+        } else if (variant === "info") {
+          feedbackBanner.style.backgroundColor = "var(--accent-soft)";
+          feedbackBanner.style.borderColor = "var(--accent-border)";
+          feedbackBanner.style.color = "var(--text-primary)";
+        } else {
+          feedbackBanner.style.backgroundColor = "rgba(239, 68, 68, 0.1)";
+          feedbackBanner.style.borderColor = "rgba(239, 68, 68, 0.35)";
+          feedbackBanner.style.color = "var(--text-primary)";
+        }
+
+        feedbackBanner.innerHTML = html;
+      }
+
+      function setFormLoading(loading) {
+        submitBtn.disabled = loading;
+        submitSpinner.classList.toggle("hidden", !loading);
+        submitBtnArrow.classList.toggle("hidden", loading);
+        submitBtnLabel.textContent = loading ? "Sending..." : "Send Message";
+      }
+
+      if (contactForm) {
+        contactForm.addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          // Helpful setup guidance if placeholder key has not yet been replaced
+          if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === "YOUR_WEB3FORMS_ACCESS_KEY") {
+            showFormFeedback(
+              "info",
+              `
+                <p class="font-semibold text-ink">Web3Forms Endpoint Ready — Action Required</p>
+                <p class="mt-1 text-secondary">
+                  This form is pre-configured for <code class="font-mono text-xs px-1.5 py-0.5 rounded bg-surface border border-hairline">https://api.web3forms.com/submit</code>. Obtain a free Access Key at
+                  <a href="https://web3forms.com" target="_blank" rel="noopener noreferrer" class="font-semibold text-accent underline">web3forms.com</a>
+                  and replace <code class="font-mono text-xs px-1.5 py-0.5 rounded bg-surface border border-hairline">YOUR_WEB3FORMS_ACCESS_KEY</code> in the script block to enable live inbox delivery.
+                </p>
+              `
+            );
+            return;
+          }
+
+          setFormLoading(true);
+          feedbackBanner.classList.add("hidden");
+
+          try {
+            const formData = new FormData(contactForm);
+            formData.set("access_key", WEB3FORMS_ACCESS_KEY);
+            const payload = Object.fromEntries(formData.entries());
+
+            const response = await fetch("https://api.web3forms.com/submit", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success === true) {
+              contactForm.reset();
+              if (hiddenAccessKeyInput) {
+                hiddenAccessKeyInput.value = WEB3FORMS_ACCESS_KEY;
+              }
+              showFormFeedback(
+                "success",
+                `
+                  <p class="font-semibold text-live">Message delivered successfully.</p>
+                  <p class="mt-0.5 text-secondary">Thank you for reaching out—Sana will respond shortly.</p>
+                `
+              );
+            } else {
+              throw new Error(result.message || "Submission error");
+            }
+          } catch (error) {
+            showFormFeedback(
+              "error",
+              `
+                <p class="font-semibold text-red-500">Message could not be sent right now.</p>
+                <p class="mt-0.5 text-secondary">
+                  Please try again or connect directly via
+                  <a href="https://www.linkedin.com/in/sana-noor-449b7a261/" target="_blank" rel="noopener noreferrer" class="font-semibold text-accent underline">LinkedIn</a>
+                  or
+                  <a href="https://github.com/itsSana-Noor" target="_blank" rel="noopener noreferrer" class="font-semibold text-accent underline">GitHub</a>.
+                </p>
+              `
+            );
+          } finally {
+            setFormLoading(false);
+          }
+        });
+      }
+    });
   </script>
 </body>
 </html>
